@@ -602,7 +602,7 @@ Internet-Draft               unyte-udp-notif                   July 2022
    The DTLS 1.3 protocol [I-D.draft-ietf-tls-dtls13] is designed to meet
    the requirements of applications that need to secure datagram
    transport.
-
+--------- remove
    DTLS can be used as a secure transport to counter all the primary
    threats to UDP-notif:
 
@@ -630,7 +630,8 @@ Internet-Draft               unyte-udp-notif                   July 2022
    Even though this security layer is unrequired, DTLS 1.3 SHOULD be
    implemented on unsecured networks to achieve privacy.
 
-6.1.  Transport
+6.1.  Transport -> remove (reference to DTLS rfc)
+---> Just a parapgraph saying that we don't modify DTLS layer
 
    As shown in Figure 6, the DTLS is layered next to the UDP transport
    providing reusable security and authentication functions over UDP.
@@ -675,7 +676,8 @@ Internet-Draft               unyte-udp-notif                   July 2022
 
 
 6.2.  Port Assignment
-
+--> put this section on 6, interesting to put in the draft
+--> merge section 6, 6.1 and 6.2
    When this security layer is used, the Publisher MUST always be a DTLS
    client, and the Receiver MUST always be a DTLS server.  The Receivers
    MUST support accepting UDP-notif Messages on the specified UDP port,
@@ -685,7 +687,7 @@ Internet-Draft               unyte-udp-notif                   July 2022
    Publisher MAY use any source UDP port for transmitting messages.
 
 6.3.  Session lifecycle
-
+--> good to stay (explaning story)
 6.3.1.  DTLS Session Initiation
 
    The Publisher initiates a DTLS connection by sending a DTLS
@@ -707,14 +709,14 @@ Internet-Draft               unyte-udp-notif                   July 2022
    suites are supported, then implementations MUST NOT negotiate a
    cipher suite that employs NULL integrity or authentication
    algorithms.
-
+-- 0RTT (refer to Sean Turner draft when is a WG document)
    Where privacy is REQUIRED, then implementations must either negotiate
    a cipher suite that employs a non-NULL encryption algorithm or
    otherwise achieve privacy by other means, such as a physically
    secured network.
 
 6.3.2.  Publish Data
-
+-- fine
    When DTLS is used, all UDP-notif messages MUST be published as DTLS
    "application_data".  It is possible that multiple UDP-notif messages
    are contained in one DTLS record, or that a publication message is
@@ -827,6 +829,8 @@ Internet-Draft               unyte-udp-notif                   July 2022
              +--rw test-peer-aliveness!
                 +--rw max-wait?       uint16
                 +--rw max-attempts?   uint8
+--> Wait for feedback from Sean Turner, should we remove the TLS12 references in the grouping ?
+--> Maybe is also already managed in the grouping
 
 8.  YANG Module
 
