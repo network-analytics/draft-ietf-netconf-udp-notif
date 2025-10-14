@@ -91,21 +91,21 @@ Table of Contents
      7.1.  YANG Module for configuring UDP-Notif . . . . . . . . . .  15
      7.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  17
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  21
-     8.1.  IANA Registries . . . . . . . . . . . . . . . . . . . . .  21
+     8.1.  UDP-Notif Protocol Registry Group . . . . . . . . . . . .  21
        8.1.1.  UDP-Notif Media Types Registry  . . . . . . . . . . .  21
        8.1.2.  UDP-Notif Option Types Registry . . . . . . . . . . .  22
-       8.1.3.  UDP-Notif Header Version Registry . . . . . . . . . .  23
-     8.2.  URI . . . . . . . . . . . . . . . . . . . . . . . . . . .  24
-     8.3.  YANG Module Name  . . . . . . . . . . . . . . . . . . . .  24
-   9.  Implementation Status . . . . . . . . . . . . . . . . . . . .  24
-     9.1.  Open Source Publisher . . . . . . . . . . . . . . . . . .  24
-     9.2.  Open Source Receiver Library  . . . . . . . . . . . . . .  24
+       8.1.3.  UDP-Notif Header Version Registry . . . . . . . . . .  22
+     8.2.  URI . . . . . . . . . . . . . . . . . . . . . . . . . . .  23
+     8.3.  YANG Module Name  . . . . . . . . . . . . . . . . . . . .  23
+   9.  Implementation Status . . . . . . . . . . . . . . . . . . . .  23
+     9.1.  Open Source Publisher . . . . . . . . . . . . . . . . . .  23
+     9.2.  Open Source Receiver Library  . . . . . . . . . . . . . .  23
      9.3.  Pmacct Data Collection  . . . . . . . . . . . . . . . . .  24
-     9.4.  Huawei VRP  . . . . . . . . . . . . . . . . . . . . . . .  25
-     9.5.  6WIND VSR . . . . . . . . . . . . . . . . . . . . . . . .  25
-     9.6.  Cisco IOS XR  . . . . . . . . . . . . . . . . . . . . . .  25
-   10. Security Considerations . . . . . . . . . . . . . . . . . . .  25
-   11. Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  26
+     9.4.  Huawei VRP  . . . . . . . . . . . . . . . . . . . . . . .  24
+     9.5.  6WIND VSR . . . . . . . . . . . . . . . . . . . . . . . .  24
+     9.6.  Cisco IOS XR  . . . . . . . . . . . . . . . . . . . . . .  24
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  24
+   11. Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  25
 
 
 
@@ -115,16 +115,16 @@ Internet-Draft                  UDP-Notif                   October 2025
 
 
    12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  26
-   13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  27
-     13.1.  Normative References . . . . . . . . . . . . . . . . . .  27
-     13.2.  Informative References . . . . . . . . . . . . . . . . .  29
-   Appendix A.  UDP-Notif Examples . . . . . . . . . . . . . . . . .  31
+   13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  26
+     13.1.  Normative References . . . . . . . . . . . . . . . . . .  26
+     13.2.  Informative References . . . . . . . . . . . . . . . . .  28
+   Appendix A.  UDP-Notif Examples . . . . . . . . . . . . . . . . .  30
      A.1.  Configuration for UDP-Notif transport with DTLS
-           disabled  . . . . . . . . . . . . . . . . . . . . . . . .  31
+           disabled  . . . . . . . . . . . . . . . . . . . . . . . .  30
      A.2.  Configuration for UDP-Notif transport with DTLS
            enabled . . . . . . . . . . . . . . . . . . . . . . . . .  32
-     A.3.  YANG Push message with UDP-Notif transport protocol . . .  35
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  36
+     A.3.  YANG Push message with UDP-Notif transport protocol . . .  34
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  35
 
 1.  Introduction
 
@@ -326,7 +326,7 @@ Internet-Draft                  UDP-Notif                   October 2025
    The Message Header contains the following field:
 
    *  Ver indicates the UDP-Notif protocol header version.  The values
-      are allocated by the IANA registry "UDP-Notif header version"
+      are allocated by the IANA registry "UDP-Notif Header Version"
       (Section 8.1).  The current header version number is 1.
 
 
@@ -1134,49 +1134,22 @@ Internet-Draft                  UDP-Notif                   October 2025
 
 8.  IANA Considerations
 
-   This document describes several new registries, the URIs from IETF
-   XML Registry and the registration of a new YANG module name.
+   This document defines new registries under a new registry group
+   entitled "UDP-Notif Protocol", and updates the IETF XML and YANG
+   module registries.
 
-8.1.  IANA Registries
+8.1.  UDP-Notif Protocol Registry Group
 
    This document requests IANA to create a new registry group called
-   "UDP-Notif protocol".
-
-   Under this registry group, the following three registries are to be
-   created:
+   "UDP-Notif protocol".  Under this registry group, three registries
+   are to be created as described in the following sections.
 
 8.1.1.  UDP-Notif Media Types Registry
 
-   Registry Name: UDP-Notif Media Types
-
-   Description: This registry defines media types that can be used for
-   encoding notification payloads transported using the UDP-Notif
-   protocol.
-
-   Registration Procedure: Standards Action (see Section 4.9 of
-   [RFC8126]).
-
-   Registration Template:
-
-   *  Value: Integer (0-15)
-
-   *  Description: Short text description of the media type
-
-   *  Reference: Document reference (e.g., RFC number)
-
-   Initial Registrations:
-
-
-
-
-
-
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 21]
-
-Internet-Draft                  UDP-Notif                   October 2025
-
+   All UDP-Notif messages contain a 4-bit media type identifier, for
+   which IANA is to create and maintain a new registry entitled "UDP-
+   Notif Media Types" under the registry group "UDP-Notif Protocol".
+   This document defines the following media type values:
 
        +=======+=======================================+===========+
        | Value | Description                           | Reference |
@@ -1192,27 +1165,25 @@ Internet-Draft                  UDP-Notif                   October 2025
 
               Table 1: Initial UDP-Notif Media Types Registry
 
+   Future assignments are to be made using the Standards Action process
+   defined in Section 4.9 of [RFC8126].  Assignments consist of the
+   value, a short description of the media type and the document
+   reference (e.g., RFC number).
+
+
+
+
+Huang-Feng, et al.        Expires 17 April 2026                [Page 21]
+
+Internet-Draft                  UDP-Notif                   October 2025
+
+
 8.1.2.  UDP-Notif Option Types Registry
 
-   Registry Name: UDP-Notif Option Types
-
-   Description: This registry defines option types used to extend
-   message capabilities within the UDP-Notif protocol, such as
-   segmentation.
-
-   Registration Procedure: Standards Action (see Section 4.9 of
-   [RFC8126]).
-
-   Registration Template:
-
-   *  Value: Integer (0-255)
-
-   *  Description: Short text description of the option
-
-   *  Reference: Document reference (e.g., RFC number)
-
-   Initial contents of the "UDP-Notif Option Types" registry are shown
-   in Table 2.
+   UDP-Notif uses an 8-bit option type (see Section 4), for which IANA
+   is to create and maintain a new registry entitled "UDP-Notif Option
+   Types" under the registry group "UDP-Notif Protocol".  This document
+   defines the following option type values:
 
                 +=======+=====================+===========+
                 | Value | Description         | Reference |
@@ -1225,36 +1196,17 @@ Internet-Draft                  UDP-Notif                   October 2025
                   Table 2: Initial UDP-Notif Option Types
                                   Registry
 
-
-
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 22]
-
-Internet-Draft                  UDP-Notif                   October 2025
-
+   Future assignments are to be made using the Standards Action process
+   defined in Section 4.9 of [RFC8126].  Assignments consist of the
+   value, a short description of the option and the document reference
+   (e.g., RFC number).
 
 8.1.3.  UDP-Notif Header Version Registry
 
-   Registry Name: UDP-Notif Header Version
-
-   Description: This registry defines the header version numbers used in
-   the UDP-Notif protocol to distinguish between different versions of
-   the transport protocol.
-
-   Registration Procedure: Standards Action (see Section 4.9 of
-   [RFC8126]).
-
-   Registration Template:
-
-   *  Value: Integer (0-7)
-
-   *  Description: Short text description of the header version
-
-   *  Reference: Document reference (e.g., RFC number)
-
-   Initial contents of the "UDP-Notif Header Version" registry are shown
-   in Table 3.
+   UDP-Notif header uses a 3-bit header version, for which IANA is to
+   create and maintain a new registry entitled "UDP-Notif Header
+   Version" under the registry group "UDP-Notif Protocol".  This
+   document defines the following header version values:
 
      +=======+===============+=======================================+
      | Value | Description   | Reference                             |
@@ -1273,6 +1225,15 @@ Internet-Draft                  UDP-Notif                   October 2025
 
              Table 3: Initial UDP-Notif Header Version Registry
 
+
+
+
+
+Huang-Feng, et al.        Expires 17 April 2026                [Page 22]
+
+Internet-Draft                  UDP-Notif                   October 2025
+
+
    Note: There is an older specification of this transport protocol
    defined in [I-D.ietf-netconf-udp-pub-channel] that was deployed in
    some networks.  To enable differentiating both protocols, different
@@ -1280,15 +1241,10 @@ Internet-Draft                  UDP-Notif                   October 2025
    [I-D.ietf-netconf-udp-pub-channel] and uses 1 as its version, while
    the header defined in [I-D.ietf-netconf-udp-pub-channel] uses 0.
 
-
-
-
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 23]
-
-Internet-Draft                  UDP-Notif                   October 2025
-
+   Future assignments are to be made using the Standards Action process
+   defined in Section 4.9 of [RFC8126].  Assignments consist of the
+   value, a description of the header version and the document reference
+   (e.g., RFC number).
 
 8.2.  URI
 
@@ -1327,6 +1283,13 @@ Internet-Draft                  UDP-Notif                   October 2025
    INSA Lyon implemented this document for a YANG Push receiver as a
    library.
 
+
+
+Huang-Feng, et al.        Expires 17 April 2026                [Page 23]
+
+Internet-Draft                  UDP-Notif                   October 2025
+
+
    The open source code can be obtained here: [INSA-Lyon-Receiver].
 
 9.3.  Pmacct Data Collection
@@ -1334,17 +1297,6 @@ Internet-Draft                  UDP-Notif                   October 2025
    The open source YANG push receiver library [INSA-Lyon-Receiver] has
    been integrated into the Pmacct open source Network Telemetry data
    collection [Paolo-Lucente-Pmacct].
-
-
-
-
-
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 24]
-
-Internet-Draft                  UDP-Notif                   October 2025
-
 
 9.4.  Huawei VRP
 
@@ -1384,23 +1336,20 @@ Internet-Draft                  UDP-Notif                   October 2025
    use a secure transport layer (e.g., SSH [RFC6242], TLS [RFC8446], and
    QUIC [RFC9000]) and have to use mutual authentication.
 
+
+
+
+
+
+Huang-Feng, et al.        Expires 17 April 2026                [Page 24]
+
+Internet-Draft                  UDP-Notif                   October 2025
+
+
    The Network Configuration Access Control Model (NACM) [RFC8341]
    provides the means to restrict access for particular NETCONF or
    RESTCONF users to a preconfigured subset of all available NETCONF or
    RESTCONF protocol operations and content.
-
-
-
-
-
-
-
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 25]
-
-Internet-Draft                  UDP-Notif                   October 2025
-
 
    There are a number of data nodes defined in this YANG module that are
    writable/creatable/deletable (i.e., config true, which is the
@@ -1439,6 +1388,20 @@ Internet-Draft                  UDP-Notif                   October 2025
    China
    Email: guyunan@huawei.com
 
+
+
+
+
+
+
+
+
+
+Huang-Feng, et al.        Expires 17 April 2026                [Page 25]
+
+Internet-Draft                  UDP-Notif                   October 2025
+
+
 12.  Acknowledgements
 
    The authors of this documents would like to thank Lucas Aubard,
@@ -1450,40 +1413,9 @@ Internet-Draft                  UDP-Notif                   October 2025
    Cardona, Qiufang Ma, James Cumming and Qin Wu for their constructive
    suggestions for improving this document.
 
-
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 26]
-
-Internet-Draft                  UDP-Notif                   October 2025
-
-
 13.  References
 
 13.1.  Normative References
-
-   [BCP195]   Best Current Practice 195,
-              <https://www.rfc-editor.org/info/bcp195>.
-              At the time of writing, this BCP comprises the following:
-
-              Moriarty, K. and S. Farrell, "Deprecating TLS 1.0 and TLS
-              1.1", BCP 195, RFC 8996, DOI 10.17487/RFC8996, March 2021,
-              <https://www.rfc-editor.org/info/rfc8996>.
-
-              Sheffer, Y., Saint-Andre, P., and T. Fossati,
-              "Recommendations for Secure Use of Transport Layer
-              Security (TLS) and Datagram Transport Layer Security
-              (DTLS)", BCP 195, RFC 9325, DOI 10.17487/RFC9325, November
-              2022, <https://www.rfc-editor.org/info/rfc9325>.
-
-   [BCP230]   Best Current Practice 230,
-              <https://www.rfc-editor.org/info/bcp230>.
-              At the time of writing, this BCP comprises the following:
-
-              Bonica, R., Baker, F., Huston, G., Hinden, R., Troan, O.,
-              and F. Gont, "IP Fragmentation Considered Fragile",
-              BCP 230, RFC 8900, DOI 10.17487/RFC8900, September 2020,
-              <https://www.rfc-editor.org/info/rfc8900>.
 
    [I-D.ietf-netconf-distributed-notif]
               Zhou, T., Zheng, G., Voit, E., Graf, T., and P. Francois,
@@ -1507,13 +1439,6 @@ Internet-Draft                  UDP-Notif                   October 2025
               10 October 2025, <https://datatracker.ietf.org/doc/html/
               draft-ietf-netconf-udp-client-server-08>.
 
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 27]
-
-Internet-Draft                  UDP-Notif                   October 2025
-
-
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -1522,6 +1447,16 @@ Internet-Draft                  UDP-Notif                   October 2025
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
               <https://www.rfc-editor.org/info/rfc3688>.
+
+
+
+
+
+
+Huang-Feng, et al.        Expires 17 April 2026                [Page 26]
+
+Internet-Draft                  UDP-Notif                   October 2025
+
 
    [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
               Specifications: ABNF", STD 68, RFC 5234,
@@ -1559,17 +1494,6 @@ Internet-Draft                  UDP-Notif                   October 2025
               DOI 10.17487/RFC8341, March 2018,
               <https://www.rfc-editor.org/info/rfc8341>.
 
-
-
-
-
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 28]
-
-Internet-Draft                  UDP-Notif                   October 2025
-
-
    [RFC8342]  Bjorklund, M., Schoenwaelder, J., Shafer, P., Watsen, K.,
               and R. Wilton, "Network Management Datastore Architecture
               (NMDA)", RFC 8342, DOI 10.17487/RFC8342, March 2018,
@@ -1579,6 +1503,16 @@ Internet-Draft                  UDP-Notif                   October 2025
               E., and A. Tripathy, "Subscription to YANG Notifications",
               RFC 8639, DOI 10.17487/RFC8639, September 2019,
               <https://www.rfc-editor.org/info/rfc8639>.
+
+
+
+
+
+
+Huang-Feng, et al.        Expires 17 April 2026                [Page 27]
+
+Internet-Draft                  UDP-Notif                   October 2025
+
 
    [RFC8640]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
               E., and A. Tripathy, "Dynamic Subscription to YANG Events
@@ -1608,6 +1542,39 @@ Internet-Draft                  UDP-Notif                   October 2025
 
 13.2.  Informative References
 
+   [BCP195]   Best Current Practice 195,
+              <https://www.rfc-editor.org/info/bcp195>.
+              At the time of writing, this BCP comprises the following:
+
+              Moriarty, K. and S. Farrell, "Deprecating TLS 1.0 and TLS
+              1.1", BCP 195, RFC 8996, DOI 10.17487/RFC8996, March 2021,
+              <https://www.rfc-editor.org/info/rfc8996>.
+
+              Sheffer, Y., Saint-Andre, P., and T. Fossati,
+              "Recommendations for Secure Use of Transport Layer
+              Security (TLS) and Datagram Transport Layer Security
+              (DTLS)", BCP 195, RFC 9325, DOI 10.17487/RFC9325, November
+              2022, <https://www.rfc-editor.org/info/rfc9325>.
+
+   [BCP230]   Best Current Practice 230,
+              <https://www.rfc-editor.org/info/bcp230>.
+              At the time of writing, this BCP comprises the following:
+
+
+
+
+
+
+Huang-Feng, et al.        Expires 17 April 2026                [Page 28]
+
+Internet-Draft                  UDP-Notif                   October 2025
+
+
+              Bonica, R., Baker, F., Huston, G., Hinden, R., Troan, O.,
+              and F. Gont, "IP Fragmentation Considered Fragile",
+              BCP 230, RFC 8900, DOI 10.17487/RFC8900, September 2020,
+              <https://www.rfc-editor.org/info/rfc8900>.
+
    [Errata-6211]
               Watsen, Kent., "Errata 6211", 2024,
               <https://www.rfc-editor.org/errata/eid6211>.
@@ -1618,13 +1585,6 @@ Internet-Draft                  UDP-Notif                   October 2025
               Internet-Draft, draft-ietf-netconf-udp-pub-channel-05, 11
               March 2019, <https://datatracker.ietf.org/doc/html/draft-
               ietf-netconf-udp-pub-channel-05>.
-
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 29]
-
-Internet-Draft                  UDP-Notif                   October 2025
-
 
    [I-D.ietf-netmod-rfc8407bis]
               Bierman, A., Boucadair, M., and Q. Wu, "Guidelines for
@@ -1656,6 +1616,16 @@ Internet-Draft                  UDP-Notif                   October 2025
               Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
               <https://www.rfc-editor.org/info/rfc6242>.
 
+
+
+
+
+
+Huang-Feng, et al.        Expires 17 April 2026                [Page 29]
+
+Internet-Draft                  UDP-Notif                   October 2025
+
+
    [RFC7011]  Claise, B., Ed., Trammell, B., Ed., and P. Aitken,
               "Specification of the IP Flow Information Export (IPFIX)
               Protocol for the Exchange of Flow Information", STD 77,
@@ -1673,14 +1643,6 @@ Internet-Draft                  UDP-Notif                   October 2025
    [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
               BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
               <https://www.rfc-editor.org/info/rfc8340>.
-
-
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 30]
-
-Internet-Draft                  UDP-Notif                   October 2025
-
 
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
@@ -1713,6 +1675,13 @@ A.1.  Configuration for UDP-Notif transport with DTLS disabled
    an IPv4 as its destination address and another uses IPv6.  The IPv4
    receiver is bound to the subscription.
 
+
+
+Huang-Feng, et al.        Expires 17 April 2026                [Page 30]
+
+Internet-Draft                  UDP-Notif                   October 2025
+
+
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
    <?xml version='1.0' encoding='UTF-8'?>
@@ -1730,14 +1699,6 @@ A.1.  Configuration for UDP-Notif transport with DTLS disabled
        <transport xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp-notif\
    -transport">unt:udp-notif</transport>
        <encoding>encode-json</encoding>
-
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 31]
-
-Internet-Draft                  UDP-Notif                   October 2025
-
-
        <receivers>
          <receiver>
            <name>subscription-specific-receiver</name>
@@ -1769,6 +1730,14 @@ Internet-Draft                  UDP-Notif                   October 2025
    p-notif-transport">
            <remote-address>2001:db8:abcd:12::1</remote-address>
            <remote-port>12345</remote-port>
+
+
+
+Huang-Feng, et al.        Expires 17 April 2026                [Page 31]
+
+Internet-Draft                  UDP-Notif                   October 2025
+
+
            <enable-segmentation>true</enable-segmentation>
            <max-segment-size>9000</max-segment-size>
          </udp-notif-receiver>
@@ -1780,19 +1749,6 @@ A.2.  Configuration for UDP-Notif transport with DTLS enabled
 
    This example shows how UDP-Notif can be configured with DTLS
    encryption.
-
-
-
-
-
-
-
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 32]
-
-Internet-Draft                  UDP-Notif                   October 2025
-
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1830,6 +1786,14 @@ Internet-Draft                  UDP-Notif                   October 2025
          <name>udp-notif-receiver-dtls</name>
          <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-ud\
    p-notif-transport">
+
+
+
+Huang-Feng, et al.        Expires 17 April 2026                [Page 32]
+
+Internet-Draft                  UDP-Notif                   October 2025
+
+
            <remote-address>2001:db8:abcd:12::1</remote-address>
            <remote-port>12345</remote-port>
            <dtls>
@@ -1842,14 +1806,6 @@ Internet-Draft                  UDP-Notif                   October 2025
    metric-key>
                  </inline-definition>
                  <external-identity>example_external_id</external-ident\
-
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 33]
-
-Internet-Draft                  UDP-Notif                   October 2025
-
-
    ity>
                  <hash>sha-256</hash>
                  <context>example_context_string</context>
@@ -1886,6 +1842,14 @@ Internet-Draft                  UDP-Notif                   October 2025
                  <inline-definition>
                    <public-key>
                      <name>corp-fw1</name>
+
+
+
+Huang-Feng, et al.        Expires 17 April 2026                [Page 33]
+
+Internet-Draft                  UDP-Notif                   October 2025
+
+
                      <public-key-format xmlns:ct="urn:ietf:params:xml:n\
    s:yang:ietf-crypto-types">ct:subject-public-key-info-format</public-\
    key-format>
@@ -1898,14 +1862,6 @@ Internet-Draft                  UDP-Notif                   October 2025
    key-format>
                      <public-key>BASE64VALUE=</public-key>
                    </public-key>
-
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 34]
-
-Internet-Draft                  UDP-Notif                   October 2025
-
-
                  </inline-definition>
                </raw-public-keys>
                <tls13-epsks/>
@@ -1928,6 +1884,28 @@ A.3.  YANG Push message with UDP-Notif transport protocol
    Figure 5, the UDP-Notif transport is encoded following the Figure 6.
    The UDP-Notif message is then encapsulated in a UDP datagram.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Huang-Feng, et al.        Expires 17 April 2026                [Page 34]
+
+Internet-Draft                  UDP-Notif                   October 2025
+
+
               {
                   "ietf-notification:notification": {
                       "eventTime": "2024-02-10T08:00:11.22Z",
@@ -1948,19 +1926,6 @@ A.3.  YANG Push message with UDP-Notif transport protocol
               }
 
                      Figure 5: JSON Payload to be sent
-
-
-
-
-
-
-
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 35]
-
-Internet-Draft                  UDP-Notif                   October 2025
-
 
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -1989,6 +1954,14 @@ Authors' Addresses
    Email: alex.huang-feng@insa-lyon.fr
 
 
+
+
+
+Huang-Feng, et al.        Expires 17 April 2026                [Page 35]
+
+Internet-Draft                  UDP-Notif                   October 2025
+
+
    Pierre Francois
    INSA-Lyon
    Lyon
@@ -2010,12 +1983,6 @@ Authors' Addresses
    CH- Zuerich 8045
    Switzerland
    Email: thomas.graf@swisscom.com
-
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 36]
-
-Internet-Draft                  UDP-Notif                   October 2025
 
 
    Paolo Lucente
@@ -2046,27 +2013,4 @@ Internet-Draft                  UDP-Notif                   October 2025
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Huang-Feng, et al.        Expires 17 April 2026                [Page 37]
+Huang-Feng, et al.        Expires 17 April 2026                [Page 36]
