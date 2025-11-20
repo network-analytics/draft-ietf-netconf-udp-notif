@@ -483,9 +483,8 @@
       the first option MAY be discarded by the receiver.</t>
 
       <section anchor="sec_fragmentation" title="Segmentation Option">
-        <t>The UDP payload length is limited to 65487 bytes 
-				(65535 - 48 bytes) for IPv6 and 65507 bytes (65535 - 28 bytes)
-				for IPv4. Application-level headers will make the actual payload
+        <t>The UDP payload length is limited to 65507 bytes (65535 - 28 bytes)
+        for IPv4 and 65527 bytes (65535 - 8 bytes) for IPv6. Application-level headers will make the actual payload
 				shorter. Even though binary encodings such as CBOR may not
 				require more space than what is left, more voluminous encodings
 				such as JSON and XML may suffer from this size limitation.
