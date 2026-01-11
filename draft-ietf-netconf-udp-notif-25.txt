@@ -624,9 +624,9 @@ Internet-Draft                  UDP-Notif                   January 2026
    performing transfer of large amounts of data and methods in
    Section 3.1.8 and 3.1.9 of [RFC8085] MUST be considered.  The
    operator SHOULD enable Quality of Service (QoS) on the network
-   between the YANG-Push publisher and receiver, pre-provision reserved
-   capacity on a dedicated QoS class and ensure that the DSCP bits in
-   YANG-Push Section 2.3 of [RFC8639] are set accordingly.
+   between the publisher and receiver, pre-provision reserved capacity
+   on a dedicated QoS class and ensure that the DSCP bits in the
+   publisher Section 2.3 of [RFC8639] are set accordingly.
 
    As per Section 3 of [RFC8085], it is NOT RECOMMENDED to use the UDP-
    Notif mechanism over congestion-sensitive network paths.  The only
@@ -643,12 +643,12 @@ Internet-Draft                  UDP-Notif                   January 2026
 
    Applications SHOULD monitor packet losses and provide means to the
    user for retrieving information on such losses.  As described in
-   Section 2.8 of [RFC8639], the YANG-Push publisher provides in "sent-
-   event-records" the amount of sent notifications.  The UDP-Notif
-   Message ID can be used to deduce congestion based on packet loss
-   detection.  Hence the receiver can notify the publisher to use a
-   lower streaming rate.  The interaction to control the streaming rate
-   on the publisher is out of the scope of this document.
+   Section 2.8 of [RFC8639], the publisher provides in "sent-event-
+   records" the amount of sent notifications.  The UDP-Notif Message ID
+   can be used to deduce congestion based on packet loss detection.
+   Hence the receiver can notify the publisher to use a lower streaming
+   rate.  The interaction to control the streaming rate on the publisher
+   is out of the scope of this document.
 
 5.2.  Message Size
 
@@ -689,8 +689,8 @@ Internet-Draft                  UDP-Notif                   January 2026
 
 5.4.  Checksum
 
-   As per Section 3.3 of [RFC8085] guidelines the YANG-Push publisher
-   and receiver applications SHOULD enable and use UDP checksum.
+   As per Section 3.3 of [RFC8085] guidelines the publisher and receiver
+   applications SHOULD enable and use UDP checksum.
 
 6.  Secured layer for UDP-Notif
 
