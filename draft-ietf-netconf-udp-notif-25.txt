@@ -119,13 +119,13 @@ Internet-Draft                  UDP-Notif                   January 2026
    13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  27
      13.1.  Normative References . . . . . . . . . . . . . . . . . .  27
      13.2.  Informative References . . . . . . . . . . . . . . . . .  29
-   Appendix A.  UDP-Notif Examples . . . . . . . . . . . . . . . . .  31
+   Appendix A.  UDP-Notif Examples . . . . . . . . . . . . . . . . .  32
      A.1.  Configuration for UDP-Notif transport with DTLS
            disabled  . . . . . . . . . . . . . . . . . . . . . . . .  32
      A.2.  Configuration for UDP-Notif transport with DTLS
            enabled . . . . . . . . . . . . . . . . . . . . . . . . .  33
-     A.3.  YANG Push message with UDP-Notif transport protocol . . .  35
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  36
+     A.3.  YANG Push message with UDP-Notif transport protocol . . .  36
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  37
 
 1.  Introduction
 
@@ -1371,27 +1371,27 @@ Internet-Draft                  UDP-Notif                   January 2026
 
 10.  Security Considerations
 
-   [RFC8085] states that "UDP applications that need to protect their
-   communications against eavesdropping, tampering, or message forgery
-   SHOULD employ end-to-end security services provided by other IETF
-   protocols".  As mentioned above, the proposed mechanism is designed
-   to be used in controlled environments, as defined in [RFC8085] also
-   known as "limited domains", as defined in [RFC8799].  Thus, a
-   security layer is not necessary required.  Nevertheless, for networks
-   that are not secured, a secure transport providing confidentiality,
+   As mentioned above, the proposed mechanism is designed to be used in
+   controlled environments, as defined in Section 3.6 of [RFC8085] also
+   known as "limited domains", as defined in [RFC8799].
+
+   In order to protect the UDP transport session from off-path attacks,
+   unicast reverese path forwarding [RFC8704] SHOULD be configured at
+   the edges of the network between the publisher and receiver to
+   prevent an application from IP spoofing.  Further, as described in
+   Section 5.1 of [RFC8085], the source port of the UDP transport
+   session SHOULD be randomized where [RFC6056] can be taken as
+   guidance.
+
+   Section 6 of [RFC8085] states that "UDP applications that need to
+   protect their communications against eavesdropping, tampering, or
+   message forgery, SHOULD employ end-to-end security services provided
+   by other IETF protocols".  Even though a security layer within
+   controlled environments is not necessarly required, for networks that
+   are not secured, a secure transport providing confidentiality,
    integrity protection, authentication, and replay protection MUST be
    implemented.  A specification of UDP-Notif using DTLS 1.3 as its
    encryption layer is presented in Section 6.
-
-   The following text uses the template described in Section 3.7 of
-   [I-D.ietf-netmod-rfc8407bis].
-
-   The "ietf-udp-notif-transport" YANG module defines a data model that
-   is designed to be accessed via YANG-based management protocols, such
-   as NETCONF [RFC6241] and RESTCONF [RFC8040].  These protocols have to
-   use a secure transport layer (e.g., SSH [RFC6242], TLS [RFC8446], and
-   QUIC [RFC9000]) and have to use mutual authentication.
-
 
 
 
@@ -1401,6 +1401,15 @@ Huang-Feng, et al.        Expires 15 July 2026                 [Page 25]
 
 Internet-Draft                  UDP-Notif                   January 2026
 
+
+   The following text uses the template described in Section 3.7 of
+   [I-D.ietf-netmod-rfc8407bis].
+
+   The "ietf-udp-notif-transport" YANG module defines a data model that
+   is designed to be accessed via YANG-based management protocols, such
+   as NETCONF [RFC6241] and RESTCONF [RFC8040].  These protocols have to
+   use a secure transport layer (e.g., SSH [RFC6242], TLS [RFC8446], and
+   QUIC [RFC9000]) and have to use mutual authentication.
 
    The Network Configuration Access Control Model (NACM) [RFC8341]
    provides the means to restrict access for particular NETCONF or
@@ -1430,19 +1439,10 @@ Internet-Draft                  UDP-Notif                   January 2026
 
 11.  Contributors
 
-   Guangying Zheng
-   Huawei
-   101 Yu-Hua-Tai Software Road
-   Nanjing
-   Jiangsu,
-   China
-   Email: zhengguangying@huawei.com
 
-   Yunan Gu
-   Huawei
-   Beijing
-   China
-   Email: guyunan@huawei.com
+
+
+
 
 
 
@@ -1457,6 +1457,20 @@ Huang-Feng, et al.        Expires 15 July 2026                 [Page 26]
 
 Internet-Draft                  UDP-Notif                   January 2026
 
+
+   Guangying Zheng
+   Huawei
+   101 Yu-Hua-Tai Software Road
+   Nanjing
+   Jiangsu,
+   China
+   Email: zhengguangying@huawei.com
+
+   Yunan Gu
+   Huawei
+   Beijing
+   China
+   Email: guyunan@huawei.com
 
 12.  Acknowledgements
 
@@ -1488,6 +1502,18 @@ Internet-Draft                  UDP-Notif                   January 2026
               <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
               https-notif-15>.
 
+
+
+
+
+
+
+
+Huang-Feng, et al.        Expires 15 July 2026                 [Page 27]
+
+Internet-Draft                  UDP-Notif                   January 2026
+
+
    [I-D.ietf-netconf-udp-client-server]
               Feng, A. H., Francois, P., and K. Watsen, "YANG Groupings
               for UDP Clients and UDP Servers", Work in Progress,
@@ -1503,16 +1529,6 @@ Internet-Draft                  UDP-Notif                   January 2026
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
               <https://www.rfc-editor.org/info/rfc3688>.
-
-
-
-
-
-
-Huang-Feng, et al.        Expires 15 July 2026                 [Page 27]
-
-Internet-Draft                  UDP-Notif                   January 2026
-
 
    [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
               Specifications: ABNF", STD 68, RFC 5234,
@@ -1545,6 +1561,15 @@ Internet-Draft                  UDP-Notif                   January 2026
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
+
+
+
+
+Huang-Feng, et al.        Expires 15 July 2026                 [Page 28]
+
+Internet-Draft                  UDP-Notif                   January 2026
+
+
    [RFC8341]  Bierman, A. and M. Bjorklund, "Network Configuration
               Access Control Model", STD 91, RFC 8341,
               DOI 10.17487/RFC8341, March 2018,
@@ -1559,16 +1584,6 @@ Internet-Draft                  UDP-Notif                   January 2026
               E., and A. Tripathy, "Subscription to YANG Notifications",
               RFC 8639, DOI 10.17487/RFC8639, September 2019,
               <https://www.rfc-editor.org/info/rfc8639>.
-
-
-
-
-
-
-Huang-Feng, et al.        Expires 15 July 2026                 [Page 28]
-
-Internet-Draft                  UDP-Notif                   January 2026
-
 
    [RFC8640]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
               E., and A. Tripathy, "Dynamic Subscription to YANG Events
@@ -1602,6 +1617,15 @@ Internet-Draft                  UDP-Notif                   January 2026
               <https://www.rfc-editor.org/info/bcp195>.
               At the time of writing, this BCP comprises the following:
 
+
+
+
+
+Huang-Feng, et al.        Expires 15 July 2026                 [Page 29]
+
+Internet-Draft                  UDP-Notif                   January 2026
+
+
               Moriarty, K. and S. Farrell, "Deprecating TLS 1.0 and TLS
               1.1", BCP 195, RFC 8996, DOI 10.17487/RFC8996, March 2021,
               <https://www.rfc-editor.org/info/rfc8996>.
@@ -1615,16 +1639,6 @@ Internet-Draft                  UDP-Notif                   January 2026
    [BCP230]   Best Current Practice 230,
               <https://www.rfc-editor.org/info/bcp230>.
               At the time of writing, this BCP comprises the following:
-
-
-
-
-
-
-Huang-Feng, et al.        Expires 15 July 2026                 [Page 29]
-
-Internet-Draft                  UDP-Notif                   January 2026
-
 
               Bonica, R., Baker, F., Huston, G., Hinden, R., Troan, O.,
               and F. Gont, "IP Fragmentation Considered Fragile",
@@ -1659,9 +1673,23 @@ Internet-Draft                  UDP-Notif                   January 2026
               <https://github.com/network-analytics/udp-notif-
               c-collector>.
 
+
+
+
+
+Huang-Feng, et al.        Expires 15 July 2026                 [Page 30]
+
+Internet-Draft                  UDP-Notif                   January 2026
+
+
    [Paolo-Lucente-Pmacct]
               "Paolo Lucente, Pmacct open source Network Telemetry Data
               Collection", <https://github.com/pmacct/pmacct>.
+
+   [RFC6056]  Larsen, M. and F. Gont, "Recommendations for Transport-
+              Protocol Port Randomization", BCP 156, RFC 6056,
+              DOI 10.17487/RFC6056, January 2011,
+              <https://www.rfc-editor.org/info/rfc6056>.
 
    [RFC6241]  Enns, R., Ed., Bjorklund, M., Ed., Schoenwaelder, J., Ed.,
               and A. Bierman, Ed., "Network Configuration Protocol
@@ -1671,16 +1699,6 @@ Internet-Draft                  UDP-Notif                   January 2026
    [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
               Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
               <https://www.rfc-editor.org/info/rfc6242>.
-
-
-
-
-
-
-Huang-Feng, et al.        Expires 15 July 2026                 [Page 30]
-
-Internet-Draft                  UDP-Notif                   January 2026
-
 
    [RFC7011]  Claise, B., Ed., Trammell, B., Ed., and P. Aitken,
               "Specification of the IP Flow Information Export (IPFIX)
@@ -1713,6 +1731,18 @@ Internet-Draft                  UDP-Notif                   January 2026
               for Datastore Updates", RFC 8641, DOI 10.17487/RFC8641,
               September 2019, <https://www.rfc-editor.org/info/rfc8641>.
 
+
+
+Huang-Feng, et al.        Expires 15 July 2026                 [Page 31]
+
+Internet-Draft                  UDP-Notif                   January 2026
+
+
+   [RFC8704]  Sriram, K., Montgomery, D., and J. Haas, "Enhanced
+              Feasible-Path Unicast Reverse Path Forwarding", BCP 84,
+              RFC 8704, DOI 10.17487/RFC8704, February 2020,
+              <https://www.rfc-editor.org/info/rfc8704>.
+
    [RFC8799]  Carpenter, B. and B. Liu, "Limited Domains and Internet
               Protocols", RFC 8799, DOI 10.17487/RFC8799, July 2020,
               <https://www.rfc-editor.org/info/rfc8799>.
@@ -1728,15 +1758,6 @@ Appendix A.  UDP-Notif Examples
    udp-notif-transport" YANG module can be used to configure a [RFC8639]
    based publisher to send notifications to a receiver and an example of
    a YANG Push notification message using UDP-Notif transport protocol.
-
-
-
-
-
-Huang-Feng, et al.        Expires 15 July 2026                 [Page 31]
-
-Internet-Draft                  UDP-Notif                   January 2026
-
 
 A.1.  Configuration for UDP-Notif transport with DTLS disabled
 
@@ -1765,6 +1786,14 @@ A.1.  Configuration for UDP-Notif transport with DTLS disabled
        <receivers>
          <receiver>
            <name>subscription-specific-receiver</name>
+
+
+
+Huang-Feng, et al.        Expires 15 July 2026                 [Page 32]
+
+Internet-Draft                  UDP-Notif                   January 2026
+
+
            <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:ie\
    tf-subscribed-notif-receivers">ipv4-udp-notif-receiver</receiver-ins\
    tance-ref>
@@ -1786,14 +1815,6 @@ A.1.  Configuration for UDP-Notif transport with DTLS disabled
            <enable-segmentation>true</enable-segmentation>
            <max-segment-size>9000</max-segment-size>
          </udp-notif-receiver>
-
-
-
-Huang-Feng, et al.        Expires 15 July 2026                 [Page 32]
-
-Internet-Draft                  UDP-Notif                   January 2026
-
-
        </receiver-instance>
        <receiver-instance>
          <name>ipv6-udp-notif-receiver</name>
@@ -1821,6 +1842,14 @@ A.2.  Configuration for UDP-Notif transport with DTLS enabled
      <subscription>
        <id>6666</id>
        <datastore xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push"
+
+
+
+Huang-Feng, et al.        Expires 15 July 2026                 [Page 33]
+
+Internet-Draft                  UDP-Notif                   January 2026
+
+
          xmlns:ds="urn:ietf:params:xml:ns:yang:ietf-datastores">ds:oper\
    ational</datastore>
        <datastore-xpath-filter xmlns="urn:ietf:params:xml:ns:yang:ietf-\
@@ -1842,14 +1871,6 @@ A.2.  Configuration for UDP-Notif transport with DTLS enabled
        <periodic xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
          <period>6000</period>
        </periodic>
-
-
-
-Huang-Feng, et al.        Expires 15 July 2026                 [Page 33]
-
-Internet-Draft                  UDP-Notif                   January 2026
-
-
      </subscription>
      <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subscr\
    ibed-notif-receivers">
@@ -1877,6 +1898,14 @@ Internet-Draft                  UDP-Notif                   January 2026
                </tls13-epsk>
              </client-identity>
              <server-authentication>
+
+
+
+Huang-Feng, et al.        Expires 15 July 2026                 [Page 34]
+
+Internet-Draft                  UDP-Notif                   January 2026
+
+
                <ca-certs>
                  <inline-definition>
                    <certificate>
@@ -1898,14 +1927,6 @@ Internet-Draft                  UDP-Notif                   January 2026
                    <certificate>
                      <name>My Application #2</name>
                      <cert-data>BASE64VALUE=</cert-data>
-
-
-
-Huang-Feng, et al.        Expires 15 July 2026                 [Page 34]
-
-Internet-Draft                  UDP-Notif                   January 2026
-
-
                    </certificate>
                  </inline-definition>
                </ee-certs>
@@ -1933,6 +1954,14 @@ Internet-Draft                  UDP-Notif                   January 2026
            <enable-segmentation>true</enable-segmentation>
            <max-segment-size>9000</max-segment-size>
          </udp-notif-receiver>
+
+
+
+Huang-Feng, et al.        Expires 15 July 2026                 [Page 35]
+
+Internet-Draft                  UDP-Notif                   January 2026
+
+
        </receiver-instance>
      </receiver-instances>
    </subscriptions>
@@ -1946,21 +1975,6 @@ A.3.  YANG Push message with UDP-Notif transport protocol
    Assuming the publisher needs to send the JSON payload showed in
    Figure 5, the UDP-Notif transport is encoded following the Figure 6.
    The UDP-Notif message is then encapsulated in a UDP datagram.
-
-
-
-
-
-
-
-
-
-
-
-Huang-Feng, et al.        Expires 15 July 2026                 [Page 35]
-
-Internet-Draft                  UDP-Notif                   January 2026
-
 
               {
                   "ietf-notification:notification": {
@@ -1982,6 +1996,27 @@ Internet-Draft                  UDP-Notif                   January 2026
               }
 
                      Figure 5: JSON Payload to be sent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Huang-Feng, et al.        Expires 15 July 2026                 [Page 36]
+
+Internet-Draft                  UDP-Notif                   January 2026
+
 
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -2010,14 +2045,6 @@ Authors' Addresses
    Email: alex.huang-feng@insa-lyon.fr
 
 
-
-
-
-Huang-Feng, et al.        Expires 15 July 2026                 [Page 36]
-
-Internet-Draft                  UDP-Notif                   January 2026
-
-
    Pierre Francois
    INSA-Lyon
    Lyon
@@ -2039,6 +2066,12 @@ Internet-Draft                  UDP-Notif                   January 2026
    CH- Zuerich 8045
    Switzerland
    Email: thomas.graf@swisscom.com
+
+
+
+Huang-Feng, et al.        Expires 15 July 2026                 [Page 37]
+
+Internet-Draft                  UDP-Notif                   January 2026
 
 
    Paolo Lucente
@@ -2069,4 +2102,27 @@ Internet-Draft                  UDP-Notif                   January 2026
 
 
 
-Huang-Feng, et al.        Expires 15 July 2026                 [Page 37]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Huang-Feng, et al.        Expires 15 July 2026                 [Page 38]
