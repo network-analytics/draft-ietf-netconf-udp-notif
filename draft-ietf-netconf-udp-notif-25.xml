@@ -138,7 +138,7 @@
       <t>While powerful in their features, and general in their architecture,
       the currently available transport mechanisms need to be complemented to
       support data publications at high frequency with low overhead used within
-			a controlled enviroment such as outband managament networks. This is
+			a controlled enviroment such as management networks. This is
       important for network nodes that feature a distributed architecture with sparse
       resources on components specialized for packet forwarding. The currently
       available transports are TCP-based requiring the maintenance of connections,
