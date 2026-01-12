@@ -597,8 +597,8 @@
 				considered. The operator SHOULD enable Quality of Service (QoS)
 				on the network between the publisher and receiver,
 				pre-provision reserved capacity on a dedicated QoS class and
-				ensure that the DSCP bits in the publisher <xref section="2.3"
-				sectionFormat="of" target="RFC8639"/> are set accordingly.</t> 
+				ensure that the DSCP bits in the publisher, as defined in <xref section="2.3"
+				sectionFormat="of" target="RFC8639"/>, are set accordingly.</t> 
 								
 				<t>As per <xref section="3" sectionFormat="of"
 				target="RFC8085"/>, it is NOT RECOMMENDED to use the UDP-Notif
@@ -743,22 +743,29 @@
         </section>
 
         <section title="Session Termination">
-          <t>A publisher MUST close the associated DTLS connection if the
-          connection is not expected to deliver any UDP-Notif Messages later.
-          It MUST send a DTLS close_notify alert before closing the
-          connection. A publisher (DTLS client) MAY choose to not wait for the
-          Receiver's close_notify alert and simply close the DTLS connection.
-          Once the Receiver gets a close_notify from the publisher, it MUST
-          reply with a close_notify.</t>
 
-          <t>When no data is received from a DTLS connection for a long time,
-          the Receiver MAY close the connection. Implementations SHOULD set
-          the timeout value to 10 minutes but application specific profiles
-          MAY recommend shorter or longer values. The Receiver (DTLS server)
-          MUST attempt to initiate an exchange of close_notify alerts with the
-          publisher before closing the connection. Receivers that are
+          <t>A Publisher (DTLS client) MUST close the associated DTLS connection when 
+          it does not expect to deliver further UDP-Notif messages. Before closing 
+          the connection, the publisher MUST send a DTLS close_notify alert. After 
+          sending close_notify, the publisher MAY close the DTLS 
+          connection without waiting for a close_notify from the Receiver.
+          Upon receiving a close_notify from the publisher, a Receiver MUST 
+          respond with a close_notify if the DTLS connection is still open.
+          </t>
+
+          <t>When no data is received from a DTLS connection for an extended period 
+          of time, the Receiver (DTLS server) MAY close the connection. 
+          Implementations SHOULD use an inactivity timer with a default value of 10 
+          minutes, unless an application-specific profile specifies otherwise. The 
+          Receiver MUST attempt to initiate an exchange of close_notify alerts with 
+          the publisher before closing the connection. Receivers that are
           unprepared to receive any more data MAY close the connection after
           sending the close_notify alert.</t>
+
+          <t>Keeping a DTLS connection open after notifications are no longer 
+          expected results in unnecessary retention of DTLS state and transport 
+          resources, and therefore increases exposure to resource-exhaustion attacks.
+          </t>
 
           <t>Although closure alerts are a component of TLS and so of DTLS,
           they, like all alerts, are not retransmitted by DTLS and so may be
@@ -1203,7 +1210,7 @@ module ietf-udp-notif-transport {
 			"limited domains", as defined in <xref target="RFC8799"/>.</t>
 			
 			<t>In order to protect the UDP transport session from off-path
-			attacks, unicast reverese path forwarding <xref target="RFC8704"/>
+			attacks, unicast reverse path forwarding <xref target="RFC8704"/>
 			SHOULD be configured at the edges of the network between the
 			publisher and receiver to prevent an application from IP spoofing.
 			Further, as described in <xref section="5.1" sectionFormat="of"
