@@ -630,7 +630,7 @@ Internet-Draft                  UDP-Notif                      June 2026
    ensures that if connectivity is being shared with other applications,
    either on connectivity dedicated to network management only or shared
    with applications unrelated to network management, that YANG-Push
-   notifications receives the proper forwarding treatment with an upper
+   notifications receive the proper forwarding treatment with an upper
    traffic volume boundary.
 
    As per Section 3 of [RFC8085], it is NOT RECOMMENDED to use the UDP-
@@ -644,10 +644,10 @@ Internet-Draft                  UDP-Notif                      June 2026
    implementing this document have already a management and control
    plane policing implementation in place where for a given application
    running on the network node a maximal amount of packet per second
-   generation is specified and with YANG-Push subscriptions, sensible
-   values for time interval in periodical and dampening-periods in on-
-   change subscriptions are configurable to protect YANG-Push Publisher
-   Receiver systems and networks in between.
+   generation is specified, and with YANG-Push subscriptions, only
+   sensible values for time interval in periodical and dampening-periods
+   in on-chang subscriptions are configurable to protect YANG-Push
+   Publisher, Receiver systems and networks in between.
 
    Burst mitigation through packet pacing is RECOMMENDED.  Disabling
    burst mitigation SHOULD require the users to explicitly configure
