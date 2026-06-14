@@ -595,11 +595,11 @@ Internet-Draft                  UDP-Notif                      June 2026
    category of UDP applications "designed for use within the network of
    a single network operator or on networks of an adjacent set of
    cooperating network operators, to be deployed in controlled
-   environments".  Implementations SHALL thus follow the recommendations
-   in place for such specific applications.  We discuss recommendations
-   on congestion control in Section 5.1, message size guidelines in
-   Section 5.2, reliability considerations in Section 5.3 and checksum
-   guidelines in Section 5.4.
+   environments".  Thus, implementations SHALL follow the
+   recommendations in place for such specific applications.  We discuss
+   recommendations on congestion control in Section 5.1, message size
+   guidelines in Section 5.2, reliability considerations in Section 5.3
+   and checksum guidelines in Section 5.4.
 
    The main use case of the UDP-Notif mechanism is the collection of
    statistical metrics for accounting purposes, where potential loss is
@@ -621,33 +621,34 @@ Internet-Draft                  UDP-Notif                      June 2026
 5.1.  Congestion Control
 
    The above application falls into the category of applications
-   performing transfer of large amounts of data and methods in
-   Section 3.1.8 and 3.1.9 of [RFC8085] MUST be considered.  The
-   operator MUST enable Quality of Service (QoS) on the network between
-   the publisher and receiver, pre-provision reserved capacity on a
-   dedicated QoS class and ensure that the DSCP bits in the publisher,
-   as defined in Section 2.3 of [RFC8639], are set accordingly.  This
-   ensures that if connectivity is being shared with other applications,
-   either on connectivity dedicated to network management only or shared
-   with applications unrelated to network management, that YANG-Push
-   notifications receive the proper forwarding treatment with an upper
-   traffic volume boundary.
+   performing transfer of large amounts of data.  Thus, guidelines
+   defined in Section 3.1.8 and 3.1.9 of [RFC8085] MUST be considered.
+   The operator MUST enable Quality of Service (QoS) on the network
+   between the publisher and receiver, pre-provision reserved capacity
+   on a dedicated QoS class and ensure that the DSCP bits in the
+   publisher, as defined in Section 2.3 of [RFC8639], are set
+   accordingly.  This ensures that if connectivity is shared with other
+   applications, either on connectivity dedicated to network management
+   only or shared with applications unrelated to network management,
+   YANG-Push notifications receive the proper forwarding treatment with
+   an upper traffic volume boundary.
 
    As per Section 3 of [RFC8085], it is NOT RECOMMENDED to use the UDP-
    Notif mechanism over congestion-sensitive network paths.  The only
    environments where UDP-Notif is expected to be used are managed
    networks.
 
-   Implementation SHOULD NOT push unbounded volumes of traffic by
-   default, and SHOULD require the users to explicitly configure such a
-   mode of operation.  It is expected that network operation systems
-   implementing this document have already a management and control
-   plane policing implementation in place where for a given application
-   running on the network node a maximal amount of packet per second
-   generation is specified, and with YANG-Push subscriptions, only
-   sensible values for time interval in periodical and dampening-periods
-   in on-chang subscriptions are configurable to protect YANG-Push
-   Publisher, Receiver systems and networks in between.
+   Implementations SHOULD NOT generate unbounded volumes of traffic by
+   default and SHOULD require the users to explicitly configure such a
+   mode of operation.  Network operating systems implementing this
+   specification are expected to have already a management and control
+   plane policing implementation that enforce application-specific rate
+   limits on packet generation for processes running on the network
+   node.  For YANG-Push subscriptions, only reasonable values for
+   periodic subscription intervals and dampening periods for on-change
+   subscriptions SHOULD be configurable to prevent excessive traffic
+   toward publisher and receiver systems and across intermediate
+   networks.
 
    Burst mitigation through packet pacing is RECOMMENDED.  Disabling
    burst mitigation SHOULD require the users to explicitly configure
@@ -655,16 +656,15 @@ Internet-Draft                  UDP-Notif                      June 2026
 
    Applications SHOULD monitor packet losses and provide means to the
    user for retrieving information on such losses.  As described in
-   Section 2.8 of [RFC8639], the publisher provides in "sent-event-
-   records" the amount of sent notifications.  The UDP-Notif Message ID
-   can be used to deduce congestion based on packet loss detection.
-   Hence the receiver can notify the publisher to use a lower streaming
-   rate.  The interaction to control the streaming rate on the publisher
-   is out of the scope of this document.
-
-
-
-
+   Section 2.8 of [RFC8639], the publisher provides the counter "sent-
+   event-records", which indicates the number of notifications sent to
+   the receiver.  The UDP-Notif Message ID can be used by the receiver
+   to detect packet loss.  For segmented messages, the Segment Number
+   can additionally be used to determine the number of lost segments for
+   a given UDP-Notif Message.  Based on this information, the receiver
+   can infer network congestion, and notify the publisher to reduce the
+   streaming rate.  The interaction to control the streaming rate on the
+   publisher is out of the scope of this document.
 
 
 
@@ -687,14 +687,15 @@ Internet-Draft                  UDP-Notif                      June 2026
    segments to avoid dropping the entire message when there is a lost
    segment.
 
-   A receiver collecting segmented UDP-Notif messages SHOULD have a
-   configurable parameter to discard segments when they exceed a certain
-   amount of segments and time.  The re-assembly of segmented
-   Notification Messages SHOULD occur within a 60 seconds time window
-   and SHALL not exceed 120 seconds.  It is RECOMMENDED to limit the
-   amount of segments to less than 64 to allow the re-assembly in
-   hardware on the Receiver end.  The generation of too many segments by
-   a publisher can be used as an abuse to require computation resources
+   A receiver collecting segmented UDP-Notif messages SHOULD support a
+   configurable reassembly timeout and a configurable limit on the
+   number of segments per message.  Incomplete messages exceeding either
+   limit SHOULD be discarded.  The re-assembly of segmented Notification
+   Messages SHOULD occur within a 60 seconds time window and SHALL not
+   exceed 120 seconds.  It is RECOMMENDED to limit the amount of
+   segments to less than 64 to allow the re-assembly on the receiver
+   without packet loss.  The generation of too many segments by a
+   publisher can be used as an abuse to require computation resources
    for reassembling large messages at the receiver.
 
 5.3.  Reliability
@@ -706,8 +707,8 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 5.4.  Checksum
 
-   As per Section 3.3 of [RFC8085] guidelines the publisher and receiver
-   applications SHOULD enable and use UDP checksum.
+   As recommended in Section 3.3 of [RFC8085], implementations SHOULD
+   generate and validate UDP checksums.
 
 6.  Secured layer for UDP-Notif
 
@@ -721,7 +722,6 @@ Internet-Draft                  UDP-Notif                      June 2026
    Implementations using DTLS to secure UDP-Notif messages MUST support
    DTLS 1.2 [RFC6347] or later, and SHOULD support DTLS 1.3 [RFC9147].
    No DTLS extensions are defined in this document.
-
 
 
 

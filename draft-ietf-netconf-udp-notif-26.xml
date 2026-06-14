@@ -576,7 +576,7 @@
 			applications "designed for use within the network of a single
 			network operator or on networks of an adjacent set of cooperating
 			network operators, to be deployed in controlled environments".
-			Implementations SHALL thus follow the recommendations in place
+			Thus, implementations SHALL follow the recommendations in place
 			for such specific applications. We discuss recommendations on
 			congestion control in <xref target="sec_congestion_control"/>,
       message size guidelines in <xref target="sec_message_size"/>,
@@ -592,17 +592,17 @@
 
       <section anchor="sec_congestion_control" title="Congestion Control">
         <t>The above application falls into the category of applications
-        performing transfer of large amounts of data and methods in
+        performing transfer of large amounts of data. Thus, guidelines defined in
 				Section 3.1.8 and 3.1.9 of <xref target="RFC8085"/> MUST be
 				considered. The operator MUST enable Quality of Service (QoS)
 				on the network between the publisher and receiver,
 				pre-provision reserved capacity on a dedicated QoS class and
 				ensure that the DSCP bits in the publisher, as defined in <xref section="2.3"
 				sectionFormat="of" target="RFC8639"/>, are set accordingly.
-				This ensures that if connectivity is being shared with
+				This ensures that if connectivity is shared with
 				other applications, either on connectivity dedicated to
 				network management only or shared with applications unrelated to
-				network management, that YANG-Push notifications receive the
+				network management, YANG-Push notifications receive the
         proper forwarding treatment with an upper traffic volume
 				boundary.</t> 
 								
@@ -612,17 +612,17 @@
 				environments where UDP-Notif is expected to be used are managed
 				networks.</t>
 
-        <t>Implementation SHOULD NOT push unbounded volumes of
-        traffic by default, and SHOULD require the users to explicitly
-        configure such a mode of operation. It is expected that
-        network operation systems implementing this document have
+        <t>Implementations SHOULD NOT generate unbounded volumes of
+        traffic by default and SHOULD require the users to explicitly
+        configure such a mode of operation. Network operating systems
+        implementing this specification are expected to have
         already a management and control plane policing implementation
-				in place where for a given application running on the network
-				node a maximal amount of packet per second generation	is
-				specified, and with YANG-Push subscriptions, only sensible
-				values for time interval in periodical and dampening-periods in
-				on-chang subscriptions are configurable to protect YANG-Push
-				Publisher, Receiver systems and networks in between.</t>
+				that enforce application-specific rate limits on packet generation
+        for processes running on the network node. For YANG-Push subscriptions,
+        only reasonable values for periodic subscription intervals
+        and dampening periods for on-change subscriptions SHOULD be
+        configurable to prevent excessive traffic toward publisher and
+        receiver systems and across intermediate networks.</t>
 
         <t>Burst mitigation through packet pacing is RECOMMENDED.
 				Disabling burst mitigation SHOULD require the users to
@@ -631,11 +631,14 @@
         <t>Applications SHOULD monitor packet losses and provide means
 				to the user for retrieving information on such losses. As
 				described in <xref section="2.8" sectionFormat="of"
-				target="RFC8639"/>, the publisher provides in
-				"sent-event-records" the amount of sent notifications. The
-				UDP-Notif Message ID can be used to deduce congestion based on
-				packet loss detection. Hence the receiver can notify the
-				publisher to use a lower streaming rate. The interaction to
+				target="RFC8639"/>, the publisher provides the counter
+				"sent-event-records", which indicates the number of notifications
+        sent to the receiver. The UDP-Notif Message ID can be used by the
+        receiver to detect packet loss. For segmented messages, the Segment Number
+        can additionally be used to determine the number of lost segments for a given
+        UDP-Notif Message. Based on this information, the receiver can infer
+        network congestion, and notify the
+				publisher to reduce the streaming rate. The interaction to
 				control the streaming rate on the publisher is out of the scope
 				of this document.</t>
       </section>
@@ -653,13 +656,14 @@
 				into too many segments to avoid dropping the entire message when
 				there is a lost segment.</t>
         
-        <t>A receiver collecting segmented UDP-Notif messages SHOULD
-				have a configurable parameter to discard segments when they
-				exceed a certain amount of segments and time. The re-assembly of
+        <t>A receiver collecting segmented UDP-Notif messages SHOULD support
+        a configurable reassembly timeout and a configurable limit on the
+        number of segments per message. Incomplete messages exceeding either
+        limit SHOULD be discarded. The re-assembly of
 				segmented Notification Messages SHOULD occur within a 60 seconds
 				time window and SHALL not exceed 120 seconds. It is RECOMMENDED
 				to limit the amount of segments to less than 64 to allow the
-				re-assembly in hardware on the Receiver end. The generation of
+				re-assembly on the receiver without packet loss. The generation of
 				too many segments by a publisher can be used as an abuse to
 				require computation resources for reassembling large messages at
 				the receiver.</t>
@@ -674,9 +678,8 @@
       </section>
 
       <section anchor="sec_checksum" title="Checksum">
-        <t>As per <xref section="3.3" sectionFormat="of"
-				target="RFC8085"/> guidelines the publisher and
-				receiver applications SHOULD enable and use UDP checksum.</t>
+        <t>As recommended in <xref section="3.3" sectionFormat="of" target="RFC8085"/>,
+        implementations SHOULD generate and validate UDP checksums.</t>
       </section>
    </section>
 
