@@ -599,7 +599,7 @@
 				pre-provision reserved capacity on a dedicated QoS class and
 				ensure that the DSCP bits in the publisher, as defined in <xref section="2.3"
 				sectionFormat="of" target="RFC8639"/>, are set accordingly. It
-				is RECOMMENDED to use CS2 as per <xref section="2.3"
+				is RECOMMENDED to use the CS2 (Class Selector 2) as per <xref section="2.3"
 				sectionFormat="of" target="RFC4594"/> for OAM. This ensures that
 				if connectivity is shared with other applications, either on
 				connectivity dedicated to network management only or shared with
