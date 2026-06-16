@@ -102,7 +102,7 @@
       </address>
     </author>
 
-    <date day="15" month="June" year="2026"/>
+    <date day="16" month="June" year="2026"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -613,7 +613,7 @@
 				environments where UDP-Notif is expected to be used are managed
 				networks.</t>
 
-        <t>Implementations SHOULD NOT generate unbounded volumes of
+        <t>Implementations MUST NOT generate unbounded volumes of
         traffic by default and SHOULD require the users to explicitly
         configure such a mode of operation. Network operating systems
         implementing this specification are expected to have
