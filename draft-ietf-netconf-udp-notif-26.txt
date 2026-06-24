@@ -3,9 +3,10 @@
 
 
 NETCONF                                                    A. Huang-Feng
-Internet-Draft                                               P. Francois
-Intended status: Standards Track                               INSA-Lyon
-Expires: 18 December 2026                                        T. Zhou
+Internet-Draft                                          Deutsche Telekom
+Intended status: Standards Track                             P. Francois
+Expires: 18 December 2026                                      INSA-Lyon
+                                                                 T. Zhou
                                                                   Huawei
                                                                  T. Graf
                                                                 Swisscom
@@ -49,7 +50,6 @@ Copyright Notice
 
    Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
-
 
 
 
@@ -2004,10 +2004,10 @@ Internet-Draft                  UDP-Notif                      June 2026
 Authors' Addresses
 
    Alex Huang Feng
-   INSA-Lyon
-   Lyon
-   France
-   Email: alex.huang-feng@insa-lyon.fr
+   Deutsche Telekom
+   Barcelona
+   Spain
+   Email: alex.huang-feng@t-systems.com
 
 
 
