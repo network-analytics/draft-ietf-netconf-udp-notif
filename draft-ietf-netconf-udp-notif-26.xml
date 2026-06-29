@@ -467,8 +467,7 @@
 
       <t><list style="symbols">
           <t>Type: 1-octet describing the option type. The values of the Type field 
-          are allocated by the IANA registry <xref target="sec_iana_reg">"UDP-Notif options
-          types"</xref>.</t>
+          are allocated by the IANA registry <xref target="sec_iana_options">"UDP-Notif Option Types"</xref>.</t>
 
           <t>Length: 1-octet representing the total number of octets in the
           TLV, including the Type and Length fields.</t>
@@ -482,6 +481,9 @@
       the publisher and the receiver, notably those assuming a fixed location for the
       segmentation option. Segmented messages where the segmentation option is not
       the first option MAY be discarded by the receiver.</t>
+
+      <t>Receivers MUST discard notifications with unknown options. Valid UDP-Notif
+      options are defined by the IANA registry "UDP-Notif Option Types", defined in <xref target="sec_iana_options"/>.</t>
 
       <section anchor="sec_fragmentation" title="Segmentation Option">
         <t>The UDP payload length is limited to 65507 bytes (65535 - 28 bytes)
@@ -529,7 +531,7 @@
             message is the value of the current Segment Number + 1.</t>
           </list></t>
 
-        <t>Implementations MUST NOT rely on IP
+        <t>Implementations MUST NOT use IP
         fragmentation to carry large messages. Implementations
         MUST either restrict the size of individual
         messages to a value that will not lead to IP fragmentation as per <xref target="sec_message_size"/>,
@@ -542,12 +544,12 @@
         include all the options. The segmentation option MUST be placed first
         in all segments.</t>
 
-        <t>The receiver SHOULD support the reception of unordered segments.
+        <t>The receiver MUST support the reception of unordered segments.
         The implementation of the receiver SHOULD provide an option to discard
         the received segments if, after some time, one of the segments is still
         missing and the reassembly of the message is not possible. No retransmission
         of lost segments are expected from the publisher. If the receiver
-        collects a segment more than once, the implementation SHOULD drop the
+        collects a segment more than once, the implementation MUST drop the
         duplicate segment.</t>
 
         <t>To reassemble segmented UDP-Notif messages, the receiver should first identify
@@ -1106,7 +1108,7 @@ module ietf-udp-notif-transport {
           Assignments consist of the value, a short description of the media type and the document reference (e.g., RFC number).</t>
         </section>
         
-        <section title="UDP-Notif Option Types Registry">
+        <section title="UDP-Notif Option Types Registry" anchor="sec_iana_options">
 
           <t>UDP-Notif uses an 8-bit option type (see <xref target="sec_options"/>), for which IANA is
           to create and maintain a new registry entitled "UDP-Notif Option Types" under the registry group "UDP-Notif Protocol". This document defines the following option type values:</t>

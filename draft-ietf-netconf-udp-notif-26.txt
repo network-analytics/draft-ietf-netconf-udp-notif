@@ -76,7 +76,7 @@ Table of Contents
      3.2.  Format of the UDP-Notif Message Header  . . . . . . . . .   6
      3.3.  Data Encoding . . . . . . . . . . . . . . . . . . . . . .   8
    4.  Options . . . . . . . . . . . . . . . . . . . . . . . . . . .   9
-     4.1.  Segmentation Option . . . . . . . . . . . . . . . . . . .   9
+     4.1.  Segmentation Option . . . . . . . . . . . . . . . . . . .  10
    5.  Applicability . . . . . . . . . . . . . . . . . . . . . . . .  11
      5.1.  Congestion Control  . . . . . . . . . . . . . . . . . . .  12
      5.2.  Message Size  . . . . . . . . . . . . . . . . . . . . . .  13
@@ -473,8 +473,8 @@ Internet-Draft                  UDP-Notif                      June 2026
                       Figure 3: Generic Option Format
 
    *  Type: 1-octet describing the option type.  The values of the Type
-      field are allocated by the IANA registry "UDP-Notif options types"
-      (Section 8.1).
+      field are allocated by the IANA registry "UDP-Notif Option Types"
+      (Section 8.1.2).
 
    *  Length: 1-octet representing the total number of octets in the
       TLV, including the Type and Length fields.
@@ -489,6 +489,23 @@ Internet-Draft                  UDP-Notif                      June 2026
    Segmented messages where the segmentation option is not the first
    option MAY be discarded by the receiver.
 
+   Receivers MUST discard notifications with unknown options.  Valid
+   UDP-Notif options are defined by the IANA registry "UDP-Notif Option
+   Types", defined in Section 8.1.2.
+
+
+
+
+
+
+
+
+
+Huang-Feng, et al.      Expires 18 December 2026                [Page 9]
+
+Internet-Draft                  UDP-Notif                      June 2026
+
+
 4.1.  Segmentation Option
 
    The UDP payload length is limited to 65507 bytes (65535 - 28 bytes)
@@ -498,14 +515,6 @@ Internet-Draft                  UDP-Notif                      June 2026
    left, more voluminous encodings such as JSON and XML may suffer from
    this size limitation.  Although IPv4 and IPv6 publishers can fragment
    outgoing packets exceeding their Maximum Transmission Unit (MTU),
-
-
-
-Huang-Feng, et al.      Expires 18 December 2026                [Page 9]
-
-Internet-Draft                  UDP-Notif                      June 2026
-
-
    fragmented IP packets may not be desired for operational and
    performance reasons [BCP230].
 
@@ -542,9 +551,17 @@ Internet-Draft                  UDP-Notif                      June 2026
       the total number of segments used to transport this message is the
       value of the current Segment Number + 1.
 
-   Implementations MUST NOT rely on IP fragmentation to carry large
+   Implementations MUST NOT use IP fragmentation to carry large
    messages.  Implementations MUST either restrict the size of
    individual messages to a value that will not lead to IP fragmentation
+
+
+
+Huang-Feng, et al.      Expires 18 December 2026               [Page 10]
+
+Internet-Draft                  UDP-Notif                      June 2026
+
+
    as per Section 5.2, or support the segmentation option.  In the
    latter case, the parameter "max-segment-size" MUST be set so that the
    size of a UDP-Notif segment and the size of the IP layer together do
@@ -555,20 +572,13 @@ Internet-Draft                  UDP-Notif                      June 2026
    MAY include all the options.  The segmentation option MUST be placed
    first in all segments.
 
-
-
-Huang-Feng, et al.      Expires 18 December 2026               [Page 10]
-
-Internet-Draft                  UDP-Notif                      June 2026
-
-
-   The receiver SHOULD support the reception of unordered segments.  The
+   The receiver MUST support the reception of unordered segments.  The
    implementation of the receiver SHOULD provide an option to discard
    the received segments if, after some time, one of the segments is
    still missing and the reassembly of the message is not possible.  No
    retransmission of lost segments are expected from the publisher.  If
    the receiver collects a segment more than once, the implementation
-   SHOULD drop the duplicate segment.
+   MUST drop the duplicate segment.
 
    To reassemble segmented UDP-Notif messages, the receiver should first
    identify UDP-Notif segments belonging to the same message by using
@@ -601,22 +611,19 @@ Internet-Draft                  UDP-Notif                      June 2026
    guidelines in Section 5.2, reliability considerations in Section 5.3
    and checksum guidelines in Section 5.4.
 
-   The main use case of the UDP-Notif mechanism is the collection of
-   statistical metrics for accounting purposes, where potential loss is
-   not a concern, but should however be reported (such as IPFIX Flow
-   Records exported with UDP [RFC7011]).  Such metrics are typically
-   exported in a periodical subscription as described in Section 3.1 of
-   [RFC8641].
-
-
-
-
 
 
 Huang-Feng, et al.      Expires 18 December 2026               [Page 11]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
+
+   The main use case of the UDP-Notif mechanism is the collection of
+   statistical metrics for accounting purposes, where potential loss is
+   not a concern, but should however be reported (such as IPFIX Flow
+   Records exported with UDP [RFC7011]).  Such metrics are typically
+   exported in a periodical subscription as described in Section 3.1 of
+   [RFC8641].
 
 5.1.  Congestion Control
 
@@ -656,16 +663,9 @@ Internet-Draft                  UDP-Notif                      June 2026
    burst mitigation SHOULD require the users to explicitly configure
    such a mode of operation.
 
-
-
-
-
-
-
-
-
-
-
+   Applications SHOULD monitor packet losses and provide means to the
+   user for retrieving information on such losses.  As described in
+   Section 2.8 of [RFC8639], the publisher provides the counter "sent-
 
 
 
@@ -674,9 +674,6 @@ Huang-Feng, et al.      Expires 18 December 2026               [Page 12]
 Internet-Draft                  UDP-Notif                      June 2026
 
 
-   Applications SHOULD monitor packet losses and provide means to the
-   user for retrieving information on such losses.  As described in
-   Section 2.8 of [RFC8639], the publisher provides the counter "sent-
    event-records", which indicates the number of notifications sent to
    the receiver.  The UDP-Notif Message ID can be used by the receiver
    to detect packet loss.  For segmented messages, the Segment Number
@@ -721,6 +718,9 @@ Internet-Draft                  UDP-Notif                      June 2026
 
    As recommended in Section 3.3 of [RFC8085], implementations SHOULD
    generate and validate UDP checksums.
+
+
+
 
 
 
