@@ -80,32 +80,32 @@ Table of Contents
    5.  Applicability . . . . . . . . . . . . . . . . . . . . . . . .  11
      5.1.  Congestion Control  . . . . . . . . . . . . . . . . . . .  12
      5.2.  Message Size  . . . . . . . . . . . . . . . . . . . . . .  13
-     5.3.  Reliability . . . . . . . . . . . . . . . . . . . . . . .  13
-     5.4.  Checksum  . . . . . . . . . . . . . . . . . . . . . . . .  13
+     5.3.  Reliability . . . . . . . . . . . . . . . . . . . . . . .  14
+     5.4.  Checksum  . . . . . . . . . . . . . . . . . . . . . . . .  14
    6.  Secured layer for UDP-Notif . . . . . . . . . . . . . . . . .  14
      6.1.  Session Lifecycle . . . . . . . . . . . . . . . . . . . .  14
        6.1.1.  DTLS Session Initiation . . . . . . . . . . . . . . .  14
        6.1.2.  Publish Data  . . . . . . . . . . . . . . . . . . . .  15
-       6.1.3.  Session Termination . . . . . . . . . . . . . . . . .  15
+       6.1.3.  Session Termination . . . . . . . . . . . . . . . . .  16
        6.1.4.  DTLS Fragmentation  . . . . . . . . . . . . . . . . .  16
    7.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  16
      7.1.  YANG Module for configuring UDP-Notif . . . . . . . . . .  16
-     7.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  18
-   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  22
-     8.1.  UDP-Notif Protocol Registry Group . . . . . . . . . . . .  22
-       8.1.1.  UDP-Notif Media Types Registry  . . . . . . . . . . .  22
-       8.1.2.  UDP-Notif Option Types Registry . . . . . . . . . . .  23
-       8.1.3.  UDP-Notif Header Version Registry . . . . . . . . . .  23
-     8.2.  URI . . . . . . . . . . . . . . . . . . . . . . . . . . .  24
-     8.3.  YANG Module Name  . . . . . . . . . . . . . . . . . . . .  24
-   9.  Implementation Status . . . . . . . . . . . . . . . . . . . .  24
-     9.1.  Open Source Publisher . . . . . . . . . . . . . . . . . .  24
-     9.2.  Open Source Receiver Library  . . . . . . . . . . . . . .  24
-     9.3.  Pmacct Data Collection  . . . . . . . . . . . . . . . . .  25
-     9.4.  Huawei VRP  . . . . . . . . . . . . . . . . . . . . . . .  25
-     9.5.  6WIND VSR . . . . . . . . . . . . . . . . . . . . . . . .  25
-     9.6.  Cisco IOS XR  . . . . . . . . . . . . . . . . . . . . . .  25
-   10. Security Considerations . . . . . . . . . . . . . . . . . . .  25
+     7.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  19
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  23
+     8.1.  UDP-Notif Protocol Registry Group . . . . . . . . . . . .  23
+       8.1.1.  UDP-Notif Media Types Registry  . . . . . . . . . . .  23
+       8.1.2.  UDP-Notif Option Types Registry . . . . . . . . . . .  24
+       8.1.3.  UDP-Notif Header Version Registry . . . . . . . . . .  24
+     8.2.  URI . . . . . . . . . . . . . . . . . . . . . . . . . . .  25
+     8.3.  YANG Module Name  . . . . . . . . . . . . . . . . . . . .  25
+   9.  Implementation Status . . . . . . . . . . . . . . . . . . . .  25
+     9.1.  Open Source Publisher . . . . . . . . . . . . . . . . . .  25
+     9.2.  Open Source Receiver Library  . . . . . . . . . . . . . .  25
+     9.3.  Pmacct Data Collection  . . . . . . . . . . . . . . . . .  26
+     9.4.  Huawei VRP  . . . . . . . . . . . . . . . . . . . . . . .  26
+     9.5.  6WIND VSR . . . . . . . . . . . . . . . . . . . . . . . .  26
+     9.6.  Cisco IOS XR  . . . . . . . . . . . . . . . . . . . . . .  26
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  26
 
 
 
@@ -114,18 +114,18 @@ Huang-Feng, et al.      Expires 18 December 2026                [Page 2]
 Internet-Draft                  UDP-Notif                      June 2026
 
 
-   11. Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  26
-   12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  27
-   13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  27
-     13.1.  Normative References . . . . . . . . . . . . . . . . . .  27
-     13.2.  Informative References . . . . . . . . . . . . . . . . .  29
-   Appendix A.  UDP-Notif Examples . . . . . . . . . . . . . . . . .  32
+   11. Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  27
+   12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  28
+   13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  28
+     13.1.  Normative References . . . . . . . . . . . . . . . . . .  28
+     13.2.  Informative References . . . . . . . . . . . . . . . . .  30
+   Appendix A.  UDP-Notif Examples . . . . . . . . . . . . . . . . .  33
      A.1.  Configuration for UDP-Notif transport with DTLS
-           disabled  . . . . . . . . . . . . . . . . . . . . . . . .  32
+           disabled  . . . . . . . . . . . . . . . . . . . . . . . .  33
      A.2.  Configuration for UDP-Notif transport with DTLS
-           enabled . . . . . . . . . . . . . . . . . . . . . . . . .  33
-     A.3.  YANG Push message with UDP-Notif transport protocol . . .  35
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  36
+           enabled . . . . . . . . . . . . . . . . . . . . . . . . .  34
+     A.3.  YANG Push message with UDP-Notif transport protocol . . .  36
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  37
 
 1.  Introduction
 
@@ -489,9 +489,9 @@ Internet-Draft                  UDP-Notif                      June 2026
    Segmented messages where the segmentation option is not the first
    option MAY be discarded by the receiver.
 
-   Receivers MUST discard notifications with unknown options.  Valid
-   UDP-Notif options are defined by the IANA registry "UDP-Notif Option
-   Types", defined in Section 8.1.2.
+   Receivers MUST discard UDP-Notif messages with unknown options.
+   Valid UDP-Notif options are defined by the IANA registry "UDP-Notif
+   Option Types", as described in Section 8.1.2.
 
 
 
@@ -663,9 +663,9 @@ Internet-Draft                  UDP-Notif                      June 2026
    burst mitigation SHOULD require the users to explicitly configure
    such a mode of operation.
 
-   Applications SHOULD monitor packet losses and provide means to the
-   user for retrieving information on such losses.  As described in
-   Section 2.8 of [RFC8639], the publisher provides the counter "sent-
+
+
+
 
 
 
@@ -674,14 +674,24 @@ Huang-Feng, et al.      Expires 18 December 2026               [Page 12]
 Internet-Draft                  UDP-Notif                      June 2026
 
 
-   event-records", which indicates the number of notifications sent to
-   the receiver.  The UDP-Notif Message ID can be used by the receiver
-   to detect packet loss.  For segmented messages, the Segment Number
-   can additionally be used to determine the number of lost segments for
-   a given UDP-Notif Message.  Based on this information, the receiver
-   can infer network congestion, and notify the publisher to reduce the
-   streaming rate.  The interaction to control the streaming rate on the
-   publisher is out of the scope of this document.
+   Applications SHOULD monitor packet loss and provide means for the
+   user to retrieve information about such losses.  As described in
+   Section 2.8 of [RFC8639], the publisher provides the "sent-event-
+   records" counter, which indicates the total number of notification
+   records sent to the receiver.
+
+   A receiver can compare the value of the "sent-event-records" counter
+   with its own count of successfully received notification records.  If
+   the publisher counter exceeds the receiver count, the receiver can
+   infer that one or more notification records have been lost, which may
+   indicate network congestion.  The UDP-Notif Message ID can be used to
+   identify missing UDP-Notif Messages, while, for segmented messages,
+   the Segment Number can additionally be used to determine the number
+   of lost segments within a given UDP-Notif Message.  Based on this
+   information, the receiver can detect packet loss, infer network
+   congestion, and notify the publisher to reduce the streaming rate.
+   The mechanism used to control the publisher streaming rate is outside
+   the scope of this document.
 
 5.2.  Message Size
 
@@ -700,24 +710,14 @@ Internet-Draft                  UDP-Notif                      June 2026
    configurable reassembly timeout and a configurable limit on the
    number of segments per message.  Incomplete messages exceeding either
    limit SHOULD be discarded.  The re-assembly of segmented Notification
-   Messages SHOULD occur within a 60 seconds time window and SHALL not
-   exceed 120 seconds.  It is RECOMMENDED to limit the amount of
-   segments to less than 64 to allow the re-assembly on the receiver
-   without packet loss.  The generation of too many segments by a
-   publisher can be used as an abuse to require computation resources
-   for reassembling large messages at the receiver.
+   Messages SHOULD occur within a 10 seconds time window and SHALL not
+   exceed 20 seconds.  It is RECOMMENDED to limit the amount of segments
+   to less than 64 to allow the re-assembly on the receiver without
+   packet loss.  The generation of too many segments by a publisher can
+   be used as an abuse to require computation resources for reassembling
+   large messages at the receiver.
 
-5.3.  Reliability
 
-   As per Section 3.3 of [RFC8085] guidelines, a receiver implementation
-   MUST discard packets that were received but cannot be re-assembled as
-   a complete message within a given amount of time.  This time SHOULD
-   be configurable.
-
-5.4.  Checksum
-
-   As recommended in Section 3.3 of [RFC8085], implementations SHOULD
-   generate and validate UDP checksums.
 
 
 
@@ -729,6 +729,18 @@ Huang-Feng, et al.      Expires 18 December 2026               [Page 13]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
+
+5.3.  Reliability
+
+   As per Section 3.3 of [RFC8085] guidelines, a receiver implementation
+   MUST discard packets that were received but cannot be re-assembled as
+   a complete message within a given amount of time.  This time SHOULD
+   be configurable.
+
+5.4.  Checksum
+
+   As recommended in Section 3.4 of [RFC8085], implementations SHOULD
+   generate and validate UDP checksums.
 
 6.  Secured layer for UDP-Notif
 
@@ -763,6 +775,17 @@ Internet-Draft                  UDP-Notif                      June 2026
    of service countermeasures defined by DTLS 1.2 and DTLS 1.3 if a
    given deployment can ensure that DoS attacks are not a concern.
 
+
+
+
+
+
+
+Huang-Feng, et al.      Expires 18 December 2026               [Page 14]
+
+Internet-Draft                  UDP-Notif                      June 2026
+
+
    In DTLS 1.3 when the denial of service countermeasures are
    implemented, the Receiver responds with a DTLS HelloRetryRequest
    containing a stateless cookie.  The publisher sends then a second
@@ -778,13 +801,6 @@ Internet-Draft                  UDP-Notif                      June 2026
    other cipher suites than the ones recommended by [BCP195] are used,
    then implementations MUST NOT negotiate a cipher suite that employs
    NULL integrity or authentication algorithms.
-
-
-
-Huang-Feng, et al.      Expires 18 December 2026               [Page 14]
-
-Internet-Draft                  UDP-Notif                      June 2026
-
 
    Where confidentiality protection with DTLS is required,
    implementations must negotiate a cipher suite that employs a non-NULL
@@ -815,6 +831,17 @@ Internet-Draft                  UDP-Notif                      June 2026
    The publisher SHOULD attempt to avoid IP fragmentation by using the
    Segmentation Option in the UDP-Notif message.
 
+
+
+
+
+
+
+Huang-Feng, et al.      Expires 18 December 2026               [Page 15]
+
+Internet-Draft                  UDP-Notif                      June 2026
+
+
 6.1.3.  Session Termination
 
    A Publisher (DTLS client) MUST close the associated DTLS connection
@@ -834,13 +861,6 @@ Internet-Draft                  UDP-Notif                      June 2026
    close_notify alerts with the publisher before closing the connection.
    Receivers that are unprepared to receive any more data MAY close the
    connection after sending the close_notify alert.
-
-
-
-Huang-Feng, et al.      Expires 18 December 2026               [Page 15]
-
-Internet-Draft                  UDP-Notif                      June 2026
-
 
    Keeping a DTLS connection open after notifications are no longer
    expected results in unnecessary retention of DTLS state and transport
@@ -869,6 +889,15 @@ Internet-Draft                  UDP-Notif                      June 2026
    new leaves and a dtls container allow configuring UDP-Notif receiver
    parameters.
 
+
+
+
+
+Huang-Feng, et al.      Expires 18 December 2026               [Page 16]
+
+Internet-Draft                  UDP-Notif                      June 2026
+
+
    The source address of the UDP-Notif message can be configured using
    the "source-address" leaf at the subscription level as defined in
    Section 2.5 of [RFC8639] or by setting the leaf "local-address" using
@@ -893,7 +922,34 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 16]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Huang-Feng, et al.      Expires 18 December 2026               [Page 17]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -949,7 +1005,7 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 17]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 18]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1005,7 +1061,7 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 18]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 19]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1061,7 +1117,7 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 19]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 20]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1117,7 +1173,7 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 20]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 21]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1173,7 +1229,7 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 21]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 22]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1229,7 +1285,7 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 22]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 23]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1285,7 +1341,7 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 23]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 24]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1341,7 +1397,7 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 24]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 25]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1397,7 +1453,7 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 25]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 26]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1453,7 +1509,7 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 26]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 27]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1509,7 +1565,7 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 27]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 28]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1565,7 +1621,7 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 28]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 29]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1621,7 +1677,7 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 29]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 30]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1677,7 +1733,7 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 30]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 31]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1733,7 +1789,7 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 31]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 32]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1789,7 +1845,7 @@ A.1.  Configuration for UDP-Notif transport with DTLS disabled
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 32]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 33]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1845,7 +1901,7 @@ A.2.  Configuration for UDP-Notif transport with DTLS enabled
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 33]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 34]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1901,7 +1957,7 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 34]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 35]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -1957,7 +2013,7 @@ A.3.  YANG Push message with UDP-Notif transport protocol
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 35]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 36]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -2013,7 +2069,7 @@ Authors' Addresses
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 36]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 37]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
@@ -2069,4 +2125,4 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 
 
-Huang-Feng, et al.      Expires 18 December 2026               [Page 37]
+Huang-Feng, et al.      Expires 18 December 2026               [Page 38]
