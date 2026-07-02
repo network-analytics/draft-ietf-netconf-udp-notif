@@ -1232,6 +1232,21 @@ module ietf-udp-notif-transport {
       </section>
     </section>
 
+    <section anchor="sec_operational_considerations"
+             title="Operational Considerations">
+
+      <t>As described in <xref target="sec_applicability"/> section, the
+			loss of segments and notifications SHOULD be monitored per Message
+			Publisher ID and network node at the YANG-Push receiver to
+			identify congestion and packet loss in the network between the
+			publisher and receiver.</t>
+
+      <t>The Quality of Service (QoS) queues on the network interfaces
+			between the publisher and receiver for CS2 (Class Selector 2)
+			market packets should be monitored to ensure that upper traffic
+			volume boundary is not reached.</t>
+    </section>
+
     <section anchor="sec_security_considerations"
              title="Security Considerations">
       <t>As mentioned above, the proposed mechanism is designed to be
