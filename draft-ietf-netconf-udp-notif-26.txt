@@ -193,9 +193,10 @@ Internet-Draft                  UDP-Notif                      June 2026
       where it collects data from network processors on line cards from
       a large number of network nodes.
 
-   *  Secondly, as no connection state needs to be maintained, UDP
-      encapsulation could be implemented by the hardware of the
-      publisher, which further improves performance.
+   *  Secondly, as only connection state for DTLS and no retransmissions
+      are needed for notifications and its segments, UDP encapsulation
+      could be implemented by the hardware of the publisher, which
+      further improves performance.
 
    *  Ultimately, such advantages allow for a larger data analysis
       feature set, as more voluminous, finer grained data sets can be
@@ -215,9 +216,8 @@ Internet-Draft                  UDP-Notif                      June 2026
    The YANG module specified in this document is compliant with Network
    Management Datastore Architecture (NMDA) [RFC8342].
 
-   Section 3 details the notification mechanism and message format.
-   Section 4 describes the use of options in the notification message
-   header.  Section 5 covers the applicability of the mechanism.
+
+
 
 
 
@@ -226,6 +226,9 @@ Huang-Feng, et al.      Expires 18 December 2026                [Page 4]
 Internet-Draft                  UDP-Notif                      June 2026
 
 
+   Section 3 details the notification mechanism and message format.
+   Section 4 describes the use of options in the notification message
+   header.  Section 5 covers the applicability of the mechanism.
    Section 6 describes a mechanism to secure the protocol in open
    networks.  Finally, Section 7 defines a YANG data model for
    management of the mechanism described in this document.
@@ -269,9 +272,6 @@ Internet-Draft                  UDP-Notif                      June 2026
    describes the general design of the solution.  Section 3.2 specifies
    the UDP-Notif message format and Section 3.3 describes the encoding
    of the message payload.
-
-
-
 
 
 
@@ -407,17 +407,17 @@ Internet-Draft                  UDP-Notif                      June 2026
       is used, Message Publisher ID unicity must be preserved through
       the collection domain.
 
-   *  The Message ID is increased monotonically by the publisher of UDP-
-      Notif messages and MUST start at 1 with the first message.  A
-      publisher MUST use different Message IDs for different messages
-      generated with the same Message Publisher ID.  Note that the main
-      purpose of the Message ID is to reconstruct messages which are
-      segmented using the segmentation option described in Section 4.1.
-      The Message ID values SHOULD be incremented by one for successive
-      messages originated with the same Message Publisher ID, so that
-      message loss can be detected at data collection.  When the last
-      value (2^32-1) of Message ID has been reached, the Message ID
-      wraps around and restarts at 0.
+   *  The Message ID MUST start with a randomized number with the first
+      message and increase monotonically by the publisher of UDP-Notif
+      messages.  A publisher MUST use different Message IDs for
+      different messages generated with the same Message Publisher ID.
+      Note that the main purpose of the Message ID is to reconstruct
+      messages which are segmented using the segmentation option
+      described in Section 4.1.  The Message ID values SHOULD be
+      incremented by one for successive messages originated with the
+      same Message Publisher ID, so that message loss can be detected at
+      data collection.  When the last value (2^32-1) of Message ID has
+      been reached, the Message ID wraps around and restarts at 0.
 
    *  Options are a variable-length field in the TLV format.  When the
       Header Length is larger than 12 octets, which is the length of the
@@ -701,10 +701,10 @@ Internet-Draft                  UDP-Notif                      June 2026
    permits segmentation of the UDP-Notif message content without relying
    on IP fragmentation.
 
-   The size of a Notification Message SHOULD be small so that
-   segmentation does not result in segmenting the message into too many
-   segments to avoid dropping the entire message when there is a lost
-   segment.
+   The size of a Notification Message SHALL be smaller than 96 kbytes so
+   that segmentation does not result in segmenting the message into too
+   many segments to avoid dropping the entire message when there is a
+   lost segment.
 
    A receiver collecting segmented UDP-Notif messages SHOULD support a
    configurable reassembly timeout and a configurable limit on the
@@ -1540,9 +1540,9 @@ Internet-Draft                  UDP-Notif                      June 2026
    [I-D.ietf-netconf-https-notif]
               Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
               for YANG Notifications", Work in Progress, Internet-Draft,
-              draft-ietf-netconf-https-notif-15, 1 February 2024,
+              draft-ietf-netconf-https-notif-16, 30 June 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
-              https-notif-15>.
+              https-notif-16>.
 
    [I-D.ietf-netconf-udp-client-server]
               Feng, A. H., Francois, P., and K. Watsen, "YANG Groupings

@@ -169,8 +169,9 @@
         where it collects data from network processors on line cards from a
         large number of network nodes.</t>
 
-        <t>Secondly, as no connection state needs to be maintained, UDP
-        encapsulation could be implemented by the hardware of the
+        <t>Secondly, as only connection state for DTLS and no
+				retransmissions are needed for notifications and its segments,
+				UDP encapsulation could be implemented by the hardware of the
         publisher, which further improves performance.</t>
 
         <t>Ultimately, such advantages allow for a larger data analysis
@@ -391,18 +392,19 @@
             Publisher ID unicity must be preserved through the collection
             domain.</t>
 
-            <t>The Message ID is increased monotonically by the publisher of
-            UDP-Notif messages and MUST start at 1 with
-            the first message. A publisher MUST use different Message IDs
-            for different messages generated with the same Message
-            Publisher ID. Note that the main purpose of the Message ID is to
-            reconstruct messages which are segmented using the segmentation
-            option described in <xref target="sec_fragmentation"/>.
-            The Message ID values SHOULD be incremented by one for
-            successive messages originated with the same Message Publisher ID,
-            so that message loss can be detected at data collection. When the last value (2^32-1)
-            of Message ID has been reached, the Message ID wraps around and
-            restarts at 0.
+            <t>The Message ID MUST start with a randomized number with
+            the first message and increase monotonically by the
+						publisher of UDP-Notif messages. A publisher MUST use
+						different Message IDs for different messages generated with
+						the same Message Publisher ID. Note that the main purpose of
+						the Message ID is to reconstruct messages which are
+						segmented using the segmentation option described in <xref
+						target="sec_fragmentation"/>. The Message ID values SHOULD
+						be incremented by one for successive messages originated
+						with the same Message Publisher ID, so that message loss can
+						be detected at data collection. When the last value (2^32-1)
+            of Message ID has been reached, the Message ID wraps around
+						and restarts at 0.
             <!-- Different subscribers MAY share the same Message ID sequence. -->
             </t>
 
@@ -660,10 +662,10 @@
 				segmentation of the UDP-Notif message content without relying on
 				IP fragmentation.</t>
 
-        <t>The size of a Notification Message SHOULD be small so that
-				segmentation does not result in segmenting the message
-				into too many segments to avoid dropping the entire message when
-				there is a lost segment.</t>
+        <t>The size of a Notification Message SHALL be smaller than
+				96 kbytes so that segmentation does not result in segmenting the
+				message into too many segments to avoid dropping the entire
+				message when there is a lost segment.</t>
         
         <t>A receiver collecting segmented UDP-Notif messages SHOULD support
         a configurable reassembly timeout and a configurable limit on the
