@@ -663,7 +663,7 @@
 				IP fragmentation.</t>
 
         <t>The size of a Notification Message SHALL be smaller than
-				96 kbytes so that segmentation does not result in segmenting the
+				96 kilobytes (KB) so that segmentation does not result in segmenting the
 				message into too many segments to avoid dropping the entire
 				message when there is a lost segment.</t>
         
@@ -1249,8 +1249,8 @@ module ietf-udp-notif-transport {
 
     <section anchor="sec_security_considerations"
              title="Security Considerations">
-      <t>As mentioned above, the proposed mechanism is designed to be
-			used in controlled environments, as defined in <xref section="3.6"
+      <t>As mentioned above, the proposed mechanism MUST be used only in
+      controlled environments, as defined in <xref section="3.6"
 			sectionFormat="of" target="RFC8085"/> also known as
 			"limited domains", as defined in <xref target="RFC8799"/>.</t>
 			
@@ -1271,9 +1271,25 @@ module ietf-udp-notif-transport {
 			environments is not necessarly required, for networks that are
 			not secured, a secure transport providing confidentiality,
 			integrity protection, authentication, and replay protection MUST
-			be implemented. A specification of UDP-Notif using DTLS 1.3 as its
+			be implemented. A specification of UDP-Notif using DTLS as its
 			encryption layer is presented in <xref
 			target="sec_dtls_udp_notif"/>.</t>
+
+      <t>As implementation guidance, receivers MAY implement a sliding
+      acceptance window for the UDP-Notif Message ID space associated with
+      each Message Publisher ID to mitigate replay and reordering attacks.
+      For each Message Publisher ID, the receiver maintains the highest
+      Message ID observed and accepts a packet only if its Message ID falls
+      within a configurable reordering window below that value and a
+      configurable forward window above it. Packets with Message IDs below
+      the lower boundary SHOULD be discarded as stale or replayed, while
+      packets with Message IDs beyond the forward boundary SHOULD be
+      discarded as invalid. Within the acceptance window, receivers SHOULD
+      track the received (Message Publisher ID, Message ID) pairs to detect
+      and discard duplicates. The lower boundary MAY be advanced as
+      notifications are successfully delivered to the application, allowing
+      older incomplete notifications below the boundary to be discarded
+      without waiting for reassembly timeouts.</t>
 
       <t>The following text uses the template described in Section 3.7 of
       <xref target="I-D.ietf-netmod-rfc8407bis"/>.</t>
