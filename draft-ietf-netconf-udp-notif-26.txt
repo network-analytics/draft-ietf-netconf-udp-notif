@@ -72,7 +72,7 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   5
    3.  UDP-Based Transport . . . . . . . . . . . . . . . . . . . . .   5
-     3.1.  Design Overview . . . . . . . . . . . . . . . . . . . . .   5
+     3.1.  Design Overview . . . . . . . . . . . . . . . . . . . . .   6
      3.2.  Format of the UDP-Notif Message Header  . . . . . . . . .   6
      3.3.  Data Encoding . . . . . . . . . . . . . . . . . . . . . .   8
    4.  Options . . . . . . . . . . . . . . . . . . . . . . . . . . .   9
@@ -261,17 +261,17 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 3.  UDP-Based Transport
 
+   The UDP-based transport specified in this document provides timely
+   datagram delivery with support for segmentation and reassembly of
+   YANG-Push notification messages over unicast UDP.  It is designed to
+   operate efficiently in controlled environments while providing
+   robustness to packet loss, replay, off-path attacks, and path
+   overload.  Applicability considerations are provided in Section 5.
+
    This section specifies the UDP-Notif transport behavior.  Section 3.1
    describes the general design of the solution.  Section 3.2 specifies
    the UDP-Notif message format and Section 3.3 describes the encoding
    of the message payload.
-
-3.1.  Design Overview
-
-   As specified in Section 2.6 of Subscribed Notifications [RFC8639],
-   the content of a YANG notification is encapsulated in a notification
-   message, which is then encapsulated and carried using a transport
-   protocol.  Figure 1 illustrates the structure of a UDP-Notif message:
 
 
 
@@ -281,6 +281,13 @@ Huang-Feng, et al.      Expires 18 December 2026                [Page 5]
 
 Internet-Draft                  UDP-Notif                      June 2026
 
+
+3.1.  Design Overview
+
+   As specified in Section 2.6 of Subscribed Notifications [RFC8639],
+   the content of a YANG notification is encapsulated in a notification
+   message, which is then encapsulated and carried using a transport
+   protocol.  Figure 1 illustrates the structure of a UDP-Notif message:
 
    *  The Message Header contains information that facilitates the
       message transmission before deserializing the notification
@@ -318,6 +325,19 @@ Internet-Draft                  UDP-Notif                      June 2026
    before deserializing the notification message.  The data format is
    shown in Figure 2.
 
+
+
+
+
+
+
+
+
+Huang-Feng, et al.      Expires 18 December 2026                [Page 6]
+
+Internet-Draft                  UDP-Notif                      June 2026
+
+
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-----+-+-------+---------------+-------------------------------+
@@ -329,14 +349,6 @@ Internet-Draft                  UDP-Notif                      June 2026
      +---------------------------------------------------------------+
      ~                          Options                              ~
      +---------------------------------------------------------------+
-
-
-
-
-Huang-Feng, et al.      Expires 18 December 2026                [Page 6]
-
-Internet-Draft                  UDP-Notif                      June 2026
-
 
                  Figure 2: UDP-Notif Message Header Format
 
@@ -374,18 +386,6 @@ Internet-Draft                  UDP-Notif                      June 2026
       the Segmentation Options defined in Section 4.1, the Message
       Length is the total length of the current UDP-Notif segment, not
       the length of the entire notification message.
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1427,20 +1427,20 @@ Internet-Draft                  UDP-Notif                      June 2026
 
 10.  Operational Considerations
 
-   As described in Section 5 section, the loss of segments and
-   notifications SHOULD be monitored per Message Publisher ID and
-   network node at the YANG-Push receiver to identify congestion and
-   packet loss in the network between the publisher and receiver.
+   As described in Section 5, the loss of segments and notifications
+   SHOULD be monitored for each Message Publisher ID and at the YANG-
+   Push receiver to detect congestion and packet loss in the network
+   between the publisher and receiver.
 
-   The Quality of Service (QoS) queues on the network interfaces between
-   the publisher and receiver for CS2 (Class Selector 2) market packets
-   should be monitored to ensure that upper traffic volume boundary is
-   not reached.
+   The Quality of Service (QoS) queues for CS2 (Class Selector 2) marked
+   packets on the network interfaces between the publisher and receiver
+   SHOULD be monitored to ensure that the configured traffic volume
+   limits are not exceeded.
 
 11.  Security Considerations
 
    As mentioned above, the proposed mechanism MUST be used only in
-   controlled environments, as defined in Section 3.6 of [RFC8085] also
+   controlled environments, as defined in Section 3.6 of [RFC8085], also
    known as "limited domains", as defined in [RFC8799].
 
    In order to protect the UDP transport session from off-path attacks,

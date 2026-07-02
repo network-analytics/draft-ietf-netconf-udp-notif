@@ -123,9 +123,6 @@
       customized stream of updates from a YANG datastore <xref
       target="RFC8342"/> is defined in Subscribed Notifications <xref target="RFC8639"/>
       and YANG-Push <xref target="RFC8641"/>. 
-      <!-- Requirements for
-      Subscription to YANG Datastores are defined in <xref
-      target="RFC7923"/>. -->
       </t>
 
       <t>Subscribed Notifications <xref target="RFC8639"/> separate the management and control
@@ -256,6 +253,15 @@
     <!-- </section> -->
 
     <section anchor="sec_ups_transport" title="UDP-Based Transport">
+
+      <t>The UDP-based transport specified in this document provides timely
+      datagram delivery with support for segmentation and reassembly of
+      YANG-Push notification messages over unicast UDP. It is designed to operate
+      efficiently in controlled environments while providing robustness to
+      packet loss, replay, off-path attacks, and path overload. Applicability
+      considerations are provided in
+      <xref target="sec_applicability"/>.</t>
+
       <t>This section specifies the UDP-Notif transport behavior. <xref
       target="sec_design"/> describes the general design of the solution.
       <xref target="sec_ups_format"/> specifies the UDP-Notif message format
@@ -1235,23 +1241,22 @@ module ietf-udp-notif-transport {
     <section anchor="sec_operational_considerations"
              title="Operational Considerations">
 
-      <t>As described in <xref target="sec_applicability"/> section, the
-			loss of segments and notifications SHOULD be monitored per Message
-			Publisher ID and network node at the YANG-Push receiver to
-			identify congestion and packet loss in the network between the
-			publisher and receiver.</t>
+      <t>As described in <xref target="sec_applicability"/>, the loss of
+      segments and notifications SHOULD be monitored for each Message
+      Publisher ID and at the YANG-Push receiver to detect congestion and
+      packet loss in the network between the publisher and receiver.</t>
 
-      <t>The Quality of Service (QoS) queues on the network interfaces
-			between the publisher and receiver for CS2 (Class Selector 2)
-			market packets should be monitored to ensure that upper traffic
-			volume boundary is not reached.</t>
+      <t>The Quality of Service (QoS) queues for CS2 (Class Selector 2)
+      marked packets on the network interfaces between the publisher and
+      receiver SHOULD be monitored to ensure that the configured traffic
+      volume limits are not exceeded.</t>
     </section>
 
     <section anchor="sec_security_considerations"
              title="Security Considerations">
       <t>As mentioned above, the proposed mechanism MUST be used only in
       controlled environments, as defined in <xref section="3.6"
-			sectionFormat="of" target="RFC8085"/> also known as
+			sectionFormat="of" target="RFC8085"/>, also known as
 			"limited domains", as defined in <xref target="RFC8799"/>.</t>
 			
 			<t>In order to protect the UDP transport session from off-path
