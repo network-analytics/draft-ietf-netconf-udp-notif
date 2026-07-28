@@ -1485,27 +1485,27 @@ Internet-Draft                  UDP-Notif                      July 2026
    implemented.  A specification of UDP-Notif using DTLS as its
    encryption layer is presented in Section 6.
 
-   As implementation guidance, receivers MAY implement a sliding
-   acceptance window for the UDP-Notif Message ID space associated with
-   each Message Publisher ID to mitigate replay and reordering attacks.
-   For each Message Publisher ID, the receiver maintains the highest
-   Message ID observed and accepts a packet only if its Message ID falls
-   within a configurable reordering window below that value and a
-   configurable forward window above it.  Packets with Message IDs below
-   the lower boundary SHOULD be discarded as stale or replayed, while
-   packets with Message IDs beyond the forward boundary SHOULD be
-   discarded as invalid.  Within the acceptance window, receivers SHOULD
-   track the received (Message Publisher ID, Message ID) pairs to detect
-   and discard duplicates.  The lower boundary MAY be advanced as
-   notifications are successfully delivered to the application, allowing
-   older incomplete notifications below the boundary to be discarded
-   without waiting for reassembly timeouts.
+   As implementation guidance, receivers SHOULD implement a mechanism to
+   mitigate replay and reordering attacks on the UDP-Notif Message ID
+   space associated with each Message Publisher ID.  A sliding
+   acceptance window is one possible mechanism to achieve this goal.
+   With this approach, for each Message Publisher ID, the receiver
+   maintains the highest Message ID observed and accepts a packet only
+   if its Message ID falls within a configurable reordering window below
+   that value and a configurable forward window above it.  With a
+   sliding acceptance window, packets with Message IDs below the lower
+   boundary are considered stale or replayed, while packets beyond the
+   forward boundary are considered invalid.  Within the acceptance
+   window, receivers SHOULD track the received (Message Publisher ID,
+   Message ID) pairs to detect and discard duplicates.  The lower
+   boundary MAY be advanced as notifications are successfully delivered
+   to the application, allowing older incomplete notifications below the
+   boundary to be discarded without waiting for reassembly timeouts.
+   Other mechanisms providing equivalent protection against replayed,
+   duplicated, or excessively delayed UDP-Notif Messages MAY be used.
 
    The following text uses the template described in Section 3.7 of
    [I-D.ietf-netmod-rfc8407bis].
-
-
-
 
 
 
