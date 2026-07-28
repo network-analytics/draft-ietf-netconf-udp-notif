@@ -794,9 +794,9 @@
           <t>APPLICATION-DATA = UDP-NOTIF-MSG</t>
 
           <t>UDP-NOTIF-MSG is defined in <xref target="sec_ups_transport"/>.
-          It represents either a complete UDP-Notif message or a segment
-          encoded using the Segmentation Option defined in
-          <xref target="sec_fragmentation"/>.</t>
+          When the Segmentation Option defined in
+          <xref target="sec_fragmentation"/> is present, the UDP-NOTIF-MSG
+          carries a single segment of a segmented UDP-Notif message.</t>
 
           <!-- <t>The publisher SHOULD attempt to avoid IP fragmentation by using
           the Segmentation Option in the UDP-Notif message.</t> -->

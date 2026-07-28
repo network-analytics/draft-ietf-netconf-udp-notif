@@ -842,9 +842,9 @@ Huang-Feng, et al.       Expires 29 January 2027               [Page 15]
 Internet-Draft                  UDP-Notif                      July 2026
 
 
-   UDP-NOTIF-MSG is defined in Section 3.  It represents either a
-   complete UDP-Notif message or a segment encoded using the
-   Segmentation Option defined in Section 4.1.
+   UDP-NOTIF-MSG is defined in Section 3.  When the Segmentation Option
+   defined in Section 4.1 is present, the UDP-NOTIF-MSG carries a single
+   segment of a segmented UDP-Notif message.
 
 6.1.3.  Session Termination
 
