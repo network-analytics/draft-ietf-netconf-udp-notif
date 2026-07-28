@@ -682,7 +682,7 @@
         message into too many segments to avoid dropping the entire
         message when there is a lost segment.</t>
         
-        <t>A receiver collecting segmented UDP-Notif messages SHOULD support
+        <!-- <t>A receiver collecting segmented UDP-Notif messages SHOULD support
         a configurable reassembly timeout and a configurable limit on the
         number of segments per message. Incomplete messages exceeding either
         limit MUST be discarded. The re-assembly of
@@ -692,7 +692,22 @@
         re-assembly on the receiver without packet loss. The generation of
         too many segments by a publisher can be used as an abuse to
         require computation resources for reassembling large messages at
-        the receiver.</t>
+        the receiver.</t> -->
+
+        <t>A receiver collecting segmented UDP-Notif Messages MUST support
+        the reassembly of messages containing at least 64 segments. A receiver
+        MAY support a larger configurable limit on the number of segments per
+        message. Incomplete messages exceeding the configured limit MUST be
+        discarded. A receiver collecting segmented UDP-Notif Messages SHOULD
+        support a configurable reassembly timeout. The reassembly of segmented
+        Notification Messages SHOULD occur within a 10 second time window and
+        MUST NOT exceed 20 seconds. It is RECOMMENDED that publishers limit
+        the number of segments to less than 64 to reduce the probability of
+        losing an entire Notification Message due to segment loss and to
+        limit resource consumption on the receiver. The generation of too
+        many segments by a publisher can be used as an abuse to require
+        computation resources for reassembling large messages at the
+        receiver.</t>
       </section>
 
       <section anchor="sec_reliability" title="Reliability">
@@ -705,7 +720,11 @@
 
       <section anchor="sec_checksum" title="Checksum">
         <t>As recommended in <xref section="3.4" sectionFormat="of" target="RFC8085"/>,
-        implementations SHOULD generate and validate UDP checksums.</t>
+        implementations SHOULD generate and validate UDP checksums.
+        For IPv6, <xref section="8.1" sectionFormat="of" target="RFC8200"/>
+        specifies that a UDP checksum must be computed when a UDP packet is
+        originated by an IPv6 node.</t>
+
       </section>
    </section>
 
@@ -1447,6 +1466,7 @@ Email: guyunan@huawei.com
       <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.7011.xml"/>
       <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.7951.xml"/>
       <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8040.xml"/>
+      <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8200.xml"/>
       <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8446.xml"/>
       <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8641.xml"/>
       <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8340.xml"/>

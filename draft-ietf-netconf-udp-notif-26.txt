@@ -83,13 +83,13 @@ Table of Contents
      5.3.  Reliability . . . . . . . . . . . . . . . . . . . . . . .  14
      5.4.  Checksum  . . . . . . . . . . . . . . . . . . . . . . . .  14
    6.  Secured layer for UDP-Notif . . . . . . . . . . . . . . . . .  14
-     6.1.  Session Lifecycle . . . . . . . . . . . . . . . . . . . .  14
-       6.1.1.  DTLS Session Initiation . . . . . . . . . . . . . . .  14
+     6.1.  Session Lifecycle . . . . . . . . . . . . . . . . . . . .  15
+       6.1.1.  DTLS Session Initiation . . . . . . . . . . . . . . .  15
        6.1.2.  Publish Data  . . . . . . . . . . . . . . . . . . . .  15
        6.1.3.  Session Termination . . . . . . . . . . . . . . . . .  16
        6.1.4.  DTLS Fragmentation  . . . . . . . . . . . . . . . . .  16
-   7.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  16
-     7.1.  YANG Module for configuring UDP-Notif . . . . . . . . . .  16
+   7.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  17
+     7.1.  YANG Module for configuring UDP-Notif . . . . . . . . . .  17
      7.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  19
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  23
      8.1.  UDP-Notif Protocol Registry Group . . . . . . . . . . . .  23
@@ -710,16 +710,16 @@ Internet-Draft                  UDP-Notif                      July 2026
    message into too many segments to avoid dropping the entire message
    when there is a lost segment.
 
-   A receiver collecting segmented UDP-Notif messages SHOULD support a
-   configurable reassembly timeout and a configurable limit on the
-   number of segments per message.  Incomplete messages exceeding either
-   limit MUST be discarded.  The re-assembly of segmented Notification
-   Messages SHOULD occur within a 10 seconds time window and MUST NOT
-   exceed 20 seconds.  It is RECOMMENDED to limit the amount of segments
-   to less than 64 to allow the re-assembly on the receiver without
-   packet loss.  The generation of too many segments by a publisher can
-   be used as an abuse to require computation resources for reassembling
-   large messages at the receiver.
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -729,6 +729,21 @@ Huang-Feng, et al.       Expires 29 January 2027               [Page 13]
 
 Internet-Draft                  UDP-Notif                      July 2026
 
+
+   A receiver collecting segmented UDP-Notif Messages MUST support the
+   reassembly of messages containing at least 64 segments.  A receiver
+   MAY support a larger configurable limit on the number of segments per
+   message.  Incomplete messages exceeding the configured limit MUST be
+   discarded.  A receiver collecting segmented UDP-Notif Messages SHOULD
+   support a configurable reassembly timeout.  The reassembly of
+   segmented Notification Messages SHOULD occur within a 10 second time
+   window and MUST NOT exceed 20 seconds.  It is RECOMMENDED that
+   publishers limit the number of segments to less than 64 to reduce the
+   probability of losing an entire Notification Message due to segment
+   loss and to limit resource consumption on the receiver.  The
+   generation of too many segments by a publisher can be used as an
+   abuse to require computation resources for reassembling large
+   messages at the receiver.
 
 5.3.  Reliability
 
@@ -740,7 +755,9 @@ Internet-Draft                  UDP-Notif                      July 2026
 5.4.  Checksum
 
    As recommended in Section 3.4 of [RFC8085], implementations SHOULD
-   generate and validate UDP checksums.
+   generate and validate UDP checksums.  For IPv6, Section 8.1 of
+   [RFC8200] specifies that a UDP checksum must be computed when a UDP
+   packet is originated by an IPv6 node.
 
 6.  Secured layer for UDP-Notif
 
@@ -762,6 +779,13 @@ Internet-Draft                  UDP-Notif                      July 2026
    recommendations for UDP source port selection specified in
    Section 3.1 also apply when DTLS is used.
 
+
+
+Huang-Feng, et al.       Expires 29 January 2027               [Page 14]
+
+Internet-Draft                  UDP-Notif                      July 2026
+
+
 6.1.  Session Lifecycle
 
    This section describes the lifecycle of UDP-Notif messages when they
@@ -773,18 +797,6 @@ Internet-Draft                  UDP-Notif                      July 2026
    ClientHello to the Receiver.  Implementations MAY disable the denial
    of service countermeasures defined by DTLS 1.2 and DTLS 1.3 if a
    given deployment can ensure that DoS attacks are not a concern.
-
-
-
-
-
-
-
-
-Huang-Feng, et al.       Expires 29 January 2027               [Page 14]
-
-Internet-Draft                  UDP-Notif                      July 2026
-
 
    In DTLS 1.3 when the denial of service countermeasures are
    implemented, the Receiver responds with a DTLS HelloRetryRequest
@@ -822,6 +834,14 @@ Internet-Draft                  UDP-Notif                      July 2026
 
    SP = %d32
 
+
+
+
+Huang-Feng, et al.       Expires 29 January 2027               [Page 15]
+
+Internet-Draft                  UDP-Notif                      July 2026
+
+
    NONZERO-DIGIT = %d49-57
 
    DIGIT = %d48 / NONZERO-DIGIT
@@ -830,17 +850,6 @@ Internet-Draft                  UDP-Notif                      July 2026
 
    The publisher SHOULD attempt to avoid IP fragmentation by using the
    Segmentation Option in the UDP-Notif message.
-
-
-
-
-
-
-
-Huang-Feng, et al.       Expires 29 January 2027               [Page 15]
-
-Internet-Draft                  UDP-Notif                      July 2026
-
 
 6.1.3.  Session Termination
 
@@ -880,15 +889,6 @@ Internet-Draft                  UDP-Notif                      July 2026
    overhead when determining the maximum UDP-Notif notification message
    size.
 
-7.  A YANG Data Model for Management of UDP-Notif
-
-7.1.  YANG Module for configuring UDP-Notif
-
-   The YANG model described in Section 7.2 defines a new receiver
-   instance for UDP-Notif transport.  When this transport is used, four
-   new leaves and a dtls container allow configuring UDP-Notif receiver
-   parameters.
-
 
 
 
@@ -897,6 +897,15 @@ Huang-Feng, et al.       Expires 29 January 2027               [Page 16]
 
 Internet-Draft                  UDP-Notif                      July 2026
 
+
+7.  A YANG Data Model for Management of UDP-Notif
+
+7.1.  YANG Module for configuring UDP-Notif
+
+   The YANG model described in Section 7.2 defines a new receiver
+   instance for UDP-Notif transport.  When this transport is used, four
+   new leaves and a dtls container allow configuring UDP-Notif receiver
+   parameters.
 
    The source address of the UDP-Notif message can be configured using
    the "source-address" leaf at the subscription level as defined in
@@ -907,15 +916,6 @@ Internet-Draft                  UDP-Notif                      July 2026
    YANG module.
 
    The model defines the following YANG tree [RFC8340]:
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1817,6 +1817,11 @@ Internet-Draft                  UDP-Notif                      July 2026
               Protocol", RFC 8040, DOI 10.17487/RFC8040, January 2017,
               <https://www.rfc-editor.org/info/rfc8040>.
 
+   [RFC8200]  Deering, S. and R. Hinden, "Internet Protocol, Version 6
+              (IPv6) Specification", STD 86, RFC 8200,
+              DOI 10.17487/RFC8200, July 2017,
+              <https://www.rfc-editor.org/info/rfc8200>.
+
    [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
               BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
               <https://www.rfc-editor.org/info/rfc8340>.
@@ -1838,17 +1843,17 @@ Internet-Draft                  UDP-Notif                      July 2026
               Protocols", RFC 8799, DOI 10.17487/RFC8799, July 2020,
               <https://www.rfc-editor.org/info/rfc8799>.
 
-   [RFC9000]  Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
-              Multiplexed and Secure Transport", RFC 9000,
-              DOI 10.17487/RFC9000, May 2021,
-              <https://www.rfc-editor.org/info/rfc9000>.
-
 
 
 Huang-Feng, et al.       Expires 29 January 2027               [Page 33]
 
 Internet-Draft                  UDP-Notif                      July 2026
 
+
+   [RFC9000]  Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
+              Multiplexed and Secure Transport", RFC 9000,
+              DOI 10.17487/RFC9000, May 2021,
+              <https://www.rfc-editor.org/info/rfc9000>.
 
 Appendix A.  UDP-Notif Examples
 
@@ -1893,11 +1898,6 @@ A.1.  Configuration for UDP-Notif transport with DTLS disabled
        <periodic xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
          <period>6000</period>
        </periodic>
-     </subscription>
-     <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subscr\
-   ibed-notif-receivers">
-       <receiver-instance>
-         <name>ipv4-udp-notif-receiver</name>
 
 
 
@@ -1906,6 +1906,11 @@ Huang-Feng, et al.       Expires 29 January 2027               [Page 34]
 Internet-Draft                  UDP-Notif                      July 2026
 
 
+     </subscription>
+     <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subscr\
+   ibed-notif-receivers">
+       <receiver-instance>
+         <name>ipv4-udp-notif-receiver</name>
          <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-ud\
    p-notif-transport">
            <remote-address>192.0.2.1</remote-address>
@@ -1949,11 +1954,6 @@ A.2.  Configuration for UDP-Notif transport with DTLS enabled
        <transport xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp-notif\
    -transport">unt:udp-notif</transport>
        <encoding>encode-json</encoding>
-       <receivers>
-         <receiver>
-           <name>subscription-specific-receiver-def</name>
-           <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:ie\
-   tf-subscribed-notif-receivers">udp-notif-receiver-dtls</receiver-ins\
 
 
 
@@ -1962,6 +1962,11 @@ Huang-Feng, et al.       Expires 29 January 2027               [Page 35]
 Internet-Draft                  UDP-Notif                      July 2026
 
 
+       <receivers>
+         <receiver>
+           <name>subscription-specific-receiver-def</name>
+           <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:ie\
+   tf-subscribed-notif-receivers">udp-notif-receiver-dtls</receiver-ins\
    tance-ref>
            <state>active</state>
          </receiver>
@@ -2005,11 +2010,6 @@ Internet-Draft                  UDP-Notif                      July 2026
                    <certificate>
                      <name>Server Cert Issuer #2</name>
                      <cert-data>BASE64VALUE=</cert-data>
-                   </certificate>
-                 </inline-definition>
-               </ca-certs>
-               <ee-certs>
-                 <inline-definition>
 
 
 
@@ -2018,6 +2018,11 @@ Huang-Feng, et al.       Expires 29 January 2027               [Page 36]
 Internet-Draft                  UDP-Notif                      July 2026
 
 
+                   </certificate>
+                 </inline-definition>
+               </ca-certs>
+               <ee-certs>
+                 <inline-definition>
                    <certificate>
                      <name>My Application #1</name>
                      <cert-data>BASE64VALUE=</cert-data>
@@ -2062,17 +2067,16 @@ A.3.  YANG Push message with UDP-Notif transport protocol
    send a "push-update" notification [RFC8641] encoded in JSON
    [RFC7951].
 
-   Assuming the publisher needs to send the JSON payload showed in
-   Figure 5, the UDP-Notif transport is encoded following the Figure 6.
-   The UDP-Notif message is then encapsulated in a UDP datagram.
-
-
 
 
 Huang-Feng, et al.       Expires 29 January 2027               [Page 37]
 
 Internet-Draft                  UDP-Notif                      July 2026
 
+
+   Assuming the publisher needs to send the JSON payload showed in
+   Figure 5, the UDP-Notif transport is encoded following the Figure 6.
+   The UDP-Notif message is then encapsulated in a UDP datagram.
 
               {
                   "ietf-notification:notification": {
@@ -2115,11 +2119,7 @@ Internet-Draft                  UDP-Notif                      July 2026
 
 Authors' Addresses
 
-   Alex Huang Feng
-   Deutsche Telekom
-   Barcelona
-   Spain
-   Email: alex.huang-feng@t-systems.com
+
 
 
 
@@ -2128,6 +2128,13 @@ Authors' Addresses
 Huang-Feng, et al.       Expires 29 January 2027               [Page 38]
 
 Internet-Draft                  UDP-Notif                      July 2026
+
+
+   Alex Huang Feng
+   Deutsche Telekom
+   Barcelona
+   Spain
+   Email: alex.huang-feng@t-systems.com
 
 
    Pierre Francois
@@ -2159,13 +2166,6 @@ Internet-Draft                  UDP-Notif                      July 2026
    Hoofddorp, WT 2132
    Netherlands
    Email: paolo@ntt.net
-
-
-
-
-
-
-
 
 
 
