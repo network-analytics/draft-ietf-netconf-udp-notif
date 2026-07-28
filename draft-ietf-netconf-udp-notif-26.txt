@@ -299,10 +299,10 @@ Internet-Draft                  UDP-Notif                      July 2026
       notification message is defined in Section 2.6 of Subscribed
       Notifications [RFC8639].
 
-               +-------+  +--------------+  +--------------+
-               |  UDP  |  |   Message    |  | Notification |
-               |       |  |   Header     |  | Message      |
-               +-------+  +--------------+  +--------------+
+               +--------+  +-------------+  +--------------+
+               |  UDP   |  |   Message   |  | Notification |
+               | Header |  |   Header    |  | Message      |
+               +--------+  +-------------+  +--------------+
 
                     Figure 1: UDP-Notif Message Overview
 
