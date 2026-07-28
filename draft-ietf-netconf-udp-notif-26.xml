@@ -779,30 +779,27 @@
         </section>
 
         <section title="Publish Data">
+
           <t>When DTLS is used, all UDP-Notif messages MUST be published as
-          DTLS "application_data". It is possible that multiple UDP-Notif
-          messages are contained in one DTLS record, or that a publication
-          message is transferred in multiple DTLS records. The application
-          data is defined with the following ABNF <xref target="RFC5234"/>
-          expression:</t>
+          DTLS "application_data". The guidance on avoiding IP fragmentation
+          by using the Segmentation Option continues to apply. If a UDP-Notif
+          message would result in an IP datagram exceeding the path MTU,
+          after accounting for IP, UDP, and DTLS overhead, the message SHOULD
+          be segmented using the Segmentation Option defined in
+          <xref target="sec_fragmentation"/> before being carried over DTLS.</t>
 
-          <t>APPLICATION-DATA = 1*UDP-NOTIF-FRAME</t>
+          <t>The application data is defined by the following ABNF
+          <xref target="RFC5234"/> expression:</t>
 
-          <t>UDP-NOTIF-FRAME = MSG-LEN SP UDP-NOTIF-MSG</t>
+          <t>APPLICATION-DATA = UDP-NOTIF-MSG</t>
 
-          <t>MSG-LEN = NONZERO-DIGIT *DIGIT</t>
+          <t>UDP-NOTIF-MSG is defined in <xref target="sec_ups_transport"/>.
+          It represents either a complete UDP-Notif message or a segment
+          encoded using the Segmentation Option defined in
+          <xref target="sec_fragmentation"/>.</t>
 
-          <t>SP = %d32</t>
-
-          <t>NONZERO-DIGIT = %d49-57</t>
-
-          <t>DIGIT = %d48 / NONZERO-DIGIT</t>
-
-          <t>UDP-NOTIF-MSG is defined in <xref
-          target="sec_ups_transport"/>.</t>
-
-          <t>The publisher SHOULD attempt to avoid IP fragmentation by using
-          the Segmentation Option in the UDP-Notif message.</t>
+          <!-- <t>The publisher SHOULD attempt to avoid IP fragmentation by using
+          the Segmentation Option in the UDP-Notif message.</t> -->
         </section>
 
         <section title="Session Termination">

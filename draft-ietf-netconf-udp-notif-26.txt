@@ -88,7 +88,7 @@ Table of Contents
        6.1.2.  Publish Data  . . . . . . . . . . . . . . . . . . . .  15
        6.1.3.  Session Termination . . . . . . . . . . . . . . . . .  16
        6.1.4.  DTLS Fragmentation  . . . . . . . . . . . . . . . . .  16
-   7.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  17
+   7.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  16
      7.1.  YANG Module for configuring UDP-Notif . . . . . . . . . .  17
      7.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  19
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  23
@@ -821,18 +821,18 @@ Internet-Draft                  UDP-Notif                      July 2026
 6.1.2.  Publish Data
 
    When DTLS is used, all UDP-Notif messages MUST be published as DTLS
-   "application_data".  It is possible that multiple UDP-Notif messages
-   are contained in one DTLS record, or that a publication message is
-   transferred in multiple DTLS records.  The application data is
-   defined with the following ABNF [RFC5234] expression:
+   "application_data".  The guidance on avoiding IP fragmentation by
+   using the Segmentation Option continues to apply.  If a UDP-Notif
+   message would result in an IP datagram exceeding the path MTU, after
+   accounting for IP, UDP, and DTLS overhead, the message SHOULD be
+   segmented using the Segmentation Option defined in Section 4.1 before
+   being carried over DTLS.
 
-   APPLICATION-DATA = 1*UDP-NOTIF-FRAME
+   The application data is defined by the following ABNF [RFC5234]
+   expression:
 
-   UDP-NOTIF-FRAME = MSG-LEN SP UDP-NOTIF-MSG
+   APPLICATION-DATA = UDP-NOTIF-MSG
 
-   MSG-LEN = NONZERO-DIGIT *DIGIT
-
-   SP = %d32
 
 
 
@@ -842,14 +842,9 @@ Huang-Feng, et al.       Expires 29 January 2027               [Page 15]
 Internet-Draft                  UDP-Notif                      July 2026
 
 
-   NONZERO-DIGIT = %d49-57
-
-   DIGIT = %d48 / NONZERO-DIGIT
-
-   UDP-NOTIF-MSG is defined in Section 3.
-
-   The publisher SHOULD attempt to avoid IP fragmentation by using the
-   Segmentation Option in the UDP-Notif message.
+   UDP-NOTIF-MSG is defined in Section 3.  It represents either a
+   complete UDP-Notif message or a segment encoded using the
+   Segmentation Option defined in Section 4.1.
 
 6.1.3.  Session Termination
 
@@ -889,6 +884,11 @@ Internet-Draft                  UDP-Notif                      July 2026
    overhead when determining the maximum UDP-Notif notification message
    size.
 
+7.  A YANG Data Model for Management of UDP-Notif
+
+
+
+
 
 
 
@@ -897,8 +897,6 @@ Huang-Feng, et al.       Expires 29 January 2027               [Page 16]
 
 Internet-Draft                  UDP-Notif                      July 2026
 
-
-7.  A YANG Data Model for Management of UDP-Notif
 
 7.1.  YANG Module for configuring UDP-Notif
 
@@ -916,6 +914,8 @@ Internet-Draft                  UDP-Notif                      July 2026
    YANG module.
 
    The model defines the following YANG tree [RFC8340]:
+
+
 
 
 
