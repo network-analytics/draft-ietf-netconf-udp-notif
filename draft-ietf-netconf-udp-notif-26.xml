@@ -102,7 +102,7 @@
       </address>
     </author>
 
-    <date day="28" month="July" year="2026"/>
+    <date day="29" month="July" year="2026"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -677,10 +677,11 @@
         segmentation of the UDP-Notif message content without relying on
         IP fragmentation.</t>
 
-        <t>The size of a Notification Message SHOULD be smaller than
-        96 kilobytes (KB) so that segmentation does not result in segmenting the
-        message into too many segments to avoid dropping the entire
-        message when there is a lost segment.</t>
+        <t>The publisher and receiver MUST support at least a Notification
+				Message size of 96 kilobytes (KB) for segmentation and re-assembly.
+				Larger Notification Messages SHOULD be avoided so that segmentation
+				does not result in segmenting the message into too many segments to
+				avoid dropping the entire message when there is a lost segment.</t>
         
         <!-- <t>A receiver collecting segmented UDP-Notif messages SHOULD support
         a configurable reassembly timeout and a configurable limit on the
@@ -713,7 +714,7 @@
       <section anchor="sec_reliability" title="Reliability">
         <t>As per <xref section="3.3" sectionFormat="of"
         target="RFC8085"/> guidelines, a receiver implementation MUST
-        discard packets that were received but cannot be re-assembled as
+        discard segments that were received but cannot be re-assembled as
         a complete message within a given amount of time. This time
         SHOULD be configurable.</t>
       </section>
@@ -735,7 +736,7 @@
       <xref target="RFC6347"/><xref target="RFC9147"/> to secure
       UDP-Notif protocol. In addition to providing encryption, DTLS also
       ensures authentication and integrity protection, preventing attacks
-      such as the injection of malicious packets.</t>
+      such as the injection of malicious segments or notifications.</t>
 
       <t>Implementations using DTLS to secure UDP-Notif messages MUST support DTLS
       1.2 <xref target="RFC6347"/> or later, and SHOULD support DTLS 1.3 <xref target="RFC9147"/>.
@@ -1271,7 +1272,7 @@ module ietf-udp-notif-transport {
       packet loss in the network between the publisher and receiver.</t>
 
       <t>The Quality of Service (QoS) queues for CS2 (Class Selector 2)
-      marked packets on the network interfaces between the publisher and
+      marked notifications on the network interfaces between the publisher and
       receiver SHOULD be monitored to ensure that the configured traffic
       volume limits are not exceeded.</t>
 
@@ -1328,8 +1329,8 @@ module ietf-udp-notif-transport {
       Message ID observed and accepts a packet only if its Message ID falls
       within a configurable reordering window below that value and a
       configurable forward window above it. With a sliding acceptance window,
-      packets with Message IDs below the lower boundary are considered stale
-      or replayed, while packets beyond the forward boundary are considered
+      notifications with Message IDs below the lower boundary are considered stale
+      or replayed, while notifications beyond the forward boundary are considered
       invalid. Within the acceptance window, receivers SHOULD
       track the received (Message Publisher ID, Message ID) pairs to detect
       and discard duplicates. The lower boundary MAY be advanced as
