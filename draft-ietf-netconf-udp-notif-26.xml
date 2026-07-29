@@ -656,27 +656,55 @@
         Disabling burst mitigation should require the users to
         explicitly configure such a mode of operation.</t>
 
-        <t>The receiver SHOULD monitor notification and segmentation loss
+        <!-- <t>The receiver SHOULD monitor notification and segmentation loss
         and expose these metrics to the application managing the YANG-Push
         subscription to the publisher. The application can use these
-        metrics to adjust the subscription scope and streaming rate.</t>
+        metrics to adjust the subscription scope and streaming rate.</t> -->
+
+        <t>The receiver SHOULD monitor notification message delivery failures and
+        expose these metrics to the application managing the YANG-Push
+        subscription to the publisher. The application can use these metrics
+        to adjust the subscription scope and streaming rate.</t>
 
         <t>A receiver can compare the value of the "sent-event-records"
+        counter, as described in <xref section="2.8" sectionFormat="of"
+        target="RFC8639"/>, with its own count of successfully delivered
+        notification messages. If the publisher counter exceeds the
+        receiver count, the receiver can infer that one or more
+        notification messages were not successfully delivered.</t>
+
+        <!-- <t>A receiver can compare the value of the "sent-event-records"
         counter, as described in <xref section="2.8" sectionFormat="of"
         target="RFC8639"/>, with its own count of successfully received
         notification messages. If the publisher counter exceeds the
         receiver count, the receiver can infer that one or more
         notification messages or segments have been lost, which may indicate network
-        congestion.</t>
+        congestion.</t> -->
         
-        <t>The UDP-Notif Message ID is used to identify
+        <t>A notification message is considered not successfully
+        delivered if one or more UDP-Notif Messages identified by
+        the UDP-Notif Message ID are missing or if one or more required
+        segments of a segmented UDP-Notif Message are missing.
+        Duplicate segments received for an otherwise successfully
+        reassembled notification message SHOULD be silently
+        discarded and MUST NOT be counted as notification delivery
+        failures. Likewise, UDP-Notif Messages or segments
+        discarded because their Message ID falls outside the receiver
+        acceptance window MUST NOT be counted as notification delivery
+        failures. Implementations MAY maintain separate
+        diagnostic counters for duplicate segments and for
+        out-of-window messages, since these events can
+        indicate duplication, misconfiguration, or an
+        attack rather than network congestion.</t>
+
+        <!-- <t>The UDP-Notif Message ID is used to identify
         missing UDP-Notif Messages, and for segmented messages, the
         Segment Number is used to determine the number
         of lost segments within a given UDP-Notif Message. 
         Any Notification Message discarded in accordance with the message
         size considerations described in <xref target="sec_message_size"/>
         MUST be considered lost for the purposes of message
-        loss detection and congestion inference.</t>
+        loss detection and congestion inference.</t> -->
       </section>
 
       <section anchor="sec_message_size" title="Message Size">
