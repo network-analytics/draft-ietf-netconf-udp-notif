@@ -262,6 +262,15 @@
       considerations are provided in
       <xref target="sec_applicability"/>.</t>
 
+      <t>UDP-Notif defines a unidirectional transport association between a
+      publisher and a receiver for the delivery of YANG-Push notification
+      messages. Each UDP-Notif message consists of a UDP-Notif message header
+      followed by a payload. When necessary, a message MAY be divided into
+      multiple segments using the segmentation mechanism specified in this
+      document. Each message or message segment is carried in a single
+      unfragmented UDP datagram, and each UDP datagram contains exactly one
+      UDP-Notif message or message segment.</t>
+
       <t>This section specifies the UDP-Notif transport behavior. <xref
       target="sec_design"/> describes the general design of the solution.
       <xref target="sec_ups_format"/> specifies the UDP-Notif message format
