@@ -1611,8 +1611,8 @@ Internet-Draft                  UDP-Notif                      July 2026
    Michael Tuxen, Rob Wilton, Sean Turner, Stephane Frenot, Timothy
    Carey, Tim Jenkins, Tom Petch, Joseph Touch, Andy Bierman, Carsten
    Bormann, Mohamed Boucadair, Weiqiang Cheng, Giuseppe Fioccola, Camilo
-   Cardona, Qiufang Ma, James Cumming and Qin Wu for their constructive
-   suggestions for improving this document.
+   Cardona, Qiufang Ma, James Cumming, Qin Wu and Gorry Fairhurst for
+   their constructive suggestions for improving this document.
 
 14.  References
 
