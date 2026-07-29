@@ -677,11 +677,19 @@
         segmentation of the UDP-Notif message content without relying on
         IP fragmentation.</t>
 
-        <t>The publisher and receiver MUST support at least a Notification
+        <t>The publisher and receiver MUST support Notification Messages
+        of at least 96 kilobytes (KB), including any required segmentation
+        and reassembly. Notification Messages larger than 96 KB SHOULD
+        be avoided, as they require additional segmentation.
+        Excessive segmentation increases the likelihood that the loss of
+        a single segment will prevent successful reassembly of the
+        entire message.</t>
+        
+        <!-- <t>The publisher and receiver MUST support at least a Notification
 				Message size of 96 kilobytes (KB) for segmentation and re-assembly.
 				Larger Notification Messages SHOULD be avoided so that segmentation
 				does not result in segmenting the message into too many segments to
-				avoid dropping the entire message when there is a lost segment.</t>
+				avoid dropping the entire message when there is a lost segment.</t> -->
         
         <!-- <t>A receiver collecting segmented UDP-Notif messages SHOULD support
         a configurable reassembly timeout and a configurable limit on the

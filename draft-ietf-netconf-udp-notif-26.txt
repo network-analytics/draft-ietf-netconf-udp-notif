@@ -705,11 +705,12 @@ Internet-Draft                  UDP-Notif                      July 2026
    permits segmentation of the UDP-Notif message content without relying
    on IP fragmentation.
 
-   The publisher and receiver MUST support at least a Notification
-   Message size of 96 kilobytes (KB) for segmentation and re-assembly.
-   Larger Notification Messages SHOULD be avoided so that segmentation
-   does not result in segmenting the message into too many segments to
-   avoid dropping the entire message when there is a lost segment.
+   The publisher and receiver MUST support Notification Messages of at
+   least 96 kilobytes (KB), including any required segmentation and
+   reassembly.  Notification Messages larger than 96 KB SHOULD be
+   avoided, as they require additional segmentation.  Excessive
+   segmentation increases the likelihood that the loss of a single
+   segment will prevent successful reassembly of the entire message.
 
    A receiver collecting segmented UDP-Notif Messages MUST support the
    reassembly of messages containing at least 64 segments.  A receiver
@@ -721,7 +722,6 @@ Internet-Draft                  UDP-Notif                      July 2026
    window and MUST NOT exceed 20 seconds.  It is RECOMMENDED that
    publishers limit the number of segments to less than 64 to reduce the
    probability of losing an entire Notification Message due to segment
-   loss and to limit resource consumption on the receiver.  The
 
 
 
@@ -730,6 +730,7 @@ Huang-Feng, et al.       Expires 30 January 2027               [Page 13]
 Internet-Draft                  UDP-Notif                      July 2026
 
 
+   loss and to limit resource consumption on the receiver.  The
    generation of too many segments by a publisher can be used as an
    abuse to require computation resources for reassembling large
    messages at the receiver.
@@ -772,7 +773,6 @@ Internet-Draft                  UDP-Notif                      July 2026
 
    This section describes the lifecycle of UDP-Notif messages when they
    are encrypted using DTLS.
-
 
 
 
