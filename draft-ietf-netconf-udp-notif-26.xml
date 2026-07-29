@@ -377,7 +377,8 @@
             </t>
 
             <t>MT is a 4-bit identifier that indicates the media type used for
-            the notification message. When the S bit is not set, the following values apply:<list
+            the notification message. When the S bit is not set, the following values apply:
+            <list
                 style="symbols">
                 <t>0: Reserved, MUST NOT be used.</t>
 
@@ -504,7 +505,8 @@
       segmentation option. Segmented messages where the segmentation option is not
       the first option MAY be discarded by the receiver.</t>
 
-      <t>Receivers MUST discard UDP-Notif messages with unsupported options. Valid UDP-Notif
+      <t>Receivers MUST discard UDP-Notif messages containing an option
+      that the receiver does not support. Valid UDP-Notif
       options are defined by the IANA registry "UDP-Notif Option Types", as
       described in <xref target="sec_iana_options"/>.</t>
 
@@ -1159,7 +1161,9 @@ module ietf-udp-notif-transport {
 
           <t>Future assignments are to be made using the Standards Action
           process defined in <xref target="RFC8126" section="4.9"/>.
-          Assignments consist of the value, a short description of the media type and the document reference (e.g., RFC number).</t>
+          Assignments consist of the value, a short description of the media type
+          and the document reference (e.g., RFC number).</t>
+
         </section>
         
         <section title="UDP-Notif Option Types Registry" anchor="sec_iana_options">
@@ -1177,7 +1181,15 @@ module ietf-udp-notif-transport {
 
           <t>Future assignments are to be made using the Standards Action
           process defined in <xref target="RFC8126" section="4.9"/>.
-          Assignments consist of the value, a short description of the option and the document reference (e.g., RFC number).</t>
+          Assignments consist of the value, a short description of the option
+          and the document reference (e.g., RFC number).</t>
+
+          <t>Specifications requesting allocation of a new UDP-Notif Option Type
+            <bcp14>MUST</bcp14> define the option format and encoding, specify the
+            processing rules for publishers and receivers, document any ordering,
+            alignment, or padding requirements, and describe any constraints on the
+            use of the option.
+          </t>
         </section>
         <section title="UDP-Notif Header Version Registry">
 
@@ -1432,8 +1444,8 @@ Email: guyunan@huawei.com
       Stephane Frenot, Timothy Carey, Tim Jenkins, Tom Petch, 
       Joseph Touch, Andy Bierman, Carsten Bormann, Mohamed Boucadair,
       Weiqiang Cheng, Giuseppe Fioccola, Camilo Cardona, Qiufang Ma,
-      James Cumming and Qin Wu for their constructive suggestions for
-      improving this document.</t>
+      James Cumming, Qin Wu and Gorry Fairhurst for their constructive
+      suggestions for improving this document.</t>
     </section>
   </middle>
 
