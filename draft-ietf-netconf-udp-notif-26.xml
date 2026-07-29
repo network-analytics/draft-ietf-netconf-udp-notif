@@ -657,25 +657,26 @@
         explicitly configure such a mode of operation.</t>
 
         <t>The receiver SHOULD monitor notification and segmentation loss
-				and make these metrics available to the application which is
-				maintaining the YANG-Push subscription at the publisher to
-				maintain publisher subscription scope and streaming rate.</t>
+        and expose these metrics to the application managing the YANG-Push
+        subscription to the publisher. The application can use these
+        metrics to adjust the subscription scope and streaming rate.</t>
 
         <t>A receiver can compare the value of the "sent-event-records"
-				counter as described in <xref section="2.8" sectionFormat="of"
-				target="RFC8639"/> with its own count of successfully received
-				notification records. If the publisher counter exceeds the
-				receiver count, the receiver can infer that one or more
-				notification records have been lost, which may indicate network
-        congestion. The UDP-Notif Message ID can be used to identify
-				missing UDP-Notif Messages, while, for segmented messages, the
-				Segment Number can additionally be used to determine the number
-				of lost segments within a given UDP-Notif Message. For segmented
-				UDP-Notif Messages, any notification message discarded in
-        accordance with the message size considerations described in
-        <xref target="sec_message_size"/> MUST be considered a lost
-				notification message for the purpose of packet loss detection
-				and congestion inference.</t>
+        counter, as described in <xref section="2.8" sectionFormat="of"
+        target="RFC8639"/>, with its own count of successfully received
+        notification messages. If the publisher counter exceeds the
+        receiver count, the receiver can infer that one or more
+        notification messages or segments have been lost, which may indicate network
+        congestion.</t>
+        
+        <t>The UDP-Notif Message ID is used to identify
+        missing UDP-Notif Messages, and for segmented messages, the
+        Segment Number is used to determine the number
+        of lost segments within a given UDP-Notif Message. 
+        Any Notification Message discarded in accordance with the message
+        size considerations described in <xref target="sec_message_size"/>
+        MUST be considered lost for the purposes of message
+        loss detection and congestion inference.</t>
       </section>
 
       <section anchor="sec_message_size" title="Message Size">
@@ -694,24 +695,6 @@
         a single segment will prevent successful reassembly of the
         entire message.</t>
         
-        <!-- <t>The publisher and receiver MUST support at least a Notification
-				Message size of 96 kilobytes (KB) for segmentation and re-assembly.
-				Larger Notification Messages SHOULD be avoided so that segmentation
-				does not result in segmenting the message into too many segments to
-				avoid dropping the entire message when there is a lost segment.</t> -->
-        
-        <!-- <t>A receiver collecting segmented UDP-Notif messages SHOULD support
-        a configurable reassembly timeout and a configurable limit on the
-        number of segments per message. Incomplete messages exceeding either
-        limit MUST be discarded. The re-assembly of
-        segmented Notification Messages SHOULD occur within a 10 seconds
-        time window and MUST NOT exceed 20 seconds. It is RECOMMENDED
-        to limit the amount of segments to less than 64 to allow the
-        re-assembly on the receiver without packet loss. The generation of
-        too many segments by a publisher can be used as an abuse to
-        require computation resources for reassembling large messages at
-        the receiver.</t> -->
-
         <t>A receiver collecting segmented UDP-Notif Messages MUST support
         the reassembly of messages containing at least 64 segments. A receiver
         MAY support a larger configurable limit on the number of segments per
@@ -941,7 +924,7 @@ module: ietf-udp-notif-transport
         and the "tls-client-grouping" defined in the "ietf-tls-client" module
         <xref target="RFC9645"/>. It uses data types defined in <xref target="RFC6991"/>.</t>
 
-        <sourcecode name="ietf-udp-notif-transport@2025-06-04.yang" type="yang" markers="true"><![CDATA[
+        <sourcecode name="ietf-udp-notif-transport@2026-07-29.yang" type="yang" markers="true"><![CDATA[
 module ietf-udp-notif-transport {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport";
@@ -983,14 +966,14 @@ module ietf-udp-notif-transport {
                Pierre Francois
                <mailto:pierre.francois@insa-lyon.fr>
                Alex Huang Feng
-               <mailto:alex.huang-feng@insa-lyon.fr>
+               <mailto:alex.huang-feng@t-systems.com>
                Paolo Lucente
                <mailto:paolo@ntt.net>";
   description
     "Defines a model for configuring UDP-Notif as a transport
      for configured subscriptions [RFC8639].
 
-     Copyright (c) 2025 IETF Trust and the persons identified as
+     Copyright (c) 2026 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -1010,7 +993,7 @@ module ietf-udp-notif-transport {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-  revision 2025-06-04 {
+  revision 2026-07-29 {
     description
       "Initial revision";
     reference
@@ -1031,8 +1014,8 @@ module ietf-udp-notif-transport {
 
   feature dtls {
     description
-      "Indicates that DTLS encryption of UDP
-       packets is supported. UDP-Notif mandates that, in
+      "Indicates that DTLS encryption of UDP-Notif messages
+       is supported. UDP-Notif mandates that, in
        unsecured networks, DTLS 1.2 or later MUST be supported,
        and DTLS 1.3 SHOULD be supported.";
     reference
@@ -1050,7 +1033,7 @@ module ietf-udp-notif-transport {
     base sn:configurable-encoding;
     description
       "UDP-Notif is used as transport for notification messages
-        and state change notifications.";
+      and state change notifications.";
   }
 
   identity encode-cbor {
@@ -1296,7 +1279,7 @@ module ietf-udp-notif-transport {
       <t>As described in <xref target="sec_applicability"/>, the loss of
       segments and notifications SHOULD be monitored for each Message
       Publisher ID and at the YANG-Push receiver to detect congestion and
-      packet loss in the network between the publisher and receiver.</t>
+      message loss in the network between the publisher and receiver.</t>
 
       <t>The Quality of Service (QoS) queues for CS2 (Class Selector 2)
       marked packets on the network interfaces between the publisher and
@@ -1353,7 +1336,7 @@ module ietf-udp-notif-transport {
       space associated with each Message Publisher ID. A sliding acceptance
       window is one possible mechanism to achieve this goal. With this approach,
       for each Message Publisher ID, the receiver maintains the highest
-      Message ID observed and accepts a packet only if its Message ID falls
+      Message ID observed and accepts a messages only if its Message ID falls
       within a configurable reordering window below that value and a
       configurable forward window above it. With a sliding acceptance window,
       notifications with Message IDs below the lower boundary are considered stale
