@@ -654,28 +654,26 @@
         Disabling burst mitigation should require the users to
         explicitly configure such a mode of operation.</t>
 
-        <t>Applications SHOULD monitor packet loss and provide
-        means for the user to retrieve information about such losses.
-        As described in <xref section="2.8" sectionFormat="of"
-        target="RFC8639"/>, the publisher provides the "sent-event-records"
-        counter, which indicates the total number of notification records
-        sent to the receiver.</t>
+        <t>The receiver SHOULD monitor notification and segmentation loss
+				and make these metrics available to the application which is
+				maintaining the YANG-Push subscription at the publisher to
+				maintain publisher subscription scope and streaming rate.</t>
 
-        <t>A receiver can compare the value of the "sent-event-records" counter
-        with its own count of successfully received notification records. If the
-        publisher counter exceeds the receiver count, the receiver can infer that
-        one or more notification records have been lost, which may indicate network
-        congestion. The UDP-Notif Message ID can be used to identify missing UDP-Notif
-        Messages, while, for segmented messages, the Segment Number can additionally be
-        used to determine the number of lost segments within a given UDP-Notif Message.
-        For segmented UDP-Notif Messages, any notification message discarded in
+        <t>A receiver can compare the value of the "sent-event-records"
+				counter as described in <xref section="2.8" sectionFormat="of"
+				target="RFC8639"/> with its own count of successfully received
+				notification records. If the publisher counter exceeds the
+				receiver count, the receiver can infer that one or more
+				notification records have been lost, which may indicate network
+        congestion. The UDP-Notif Message ID can be used to identify
+				missing UDP-Notif Messages, while, for segmented messages, the
+				Segment Number can additionally be used to determine the number
+				of lost segments within a given UDP-Notif Message. For segmented
+				UDP-Notif Messages, any notification message discarded in
         accordance with the message size considerations described in
-        <xref target="sec_message_size"/> MUST be considered a lost notification
-        message for the purpose of packet loss detection and congestion inference.
-        Based on this information, the receiver can detect packet loss,
-        infer network congestion, and notify the publisher to reduce the streaming rate.
-        The mechanism used to control the publisher streaming rate is outside
-        the scope of this document.</t>
+        <xref target="sec_message_size"/> MUST be considered a lost
+				notification message for the purpose of packet loss detection
+				and congestion inference.</t>
       </section>
 
       <section anchor="sec_message_size" title="Message Size">
@@ -1289,7 +1287,7 @@ module ietf-udp-notif-transport {
       packet loss in the network between the publisher and receiver.</t>
 
       <t>The Quality of Service (QoS) queues for CS2 (Class Selector 2)
-      marked notifications on the network interfaces between the publisher and
+      marked packets on the network interfaces between the publisher and
       receiver SHOULD be monitored to ensure that the configured traffic
       volume limits are not exceeded.</t>
 

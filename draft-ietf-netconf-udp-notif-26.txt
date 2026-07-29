@@ -88,7 +88,7 @@ Table of Contents
        6.1.2.  Publish Data  . . . . . . . . . . . . . . . . . . . .  15
        6.1.3.  Session Termination . . . . . . . . . . . . . . . . .  16
        6.1.4.  DTLS Fragmentation  . . . . . . . . . . . . . . . . .  16
-   7.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  17
+   7.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  16
      7.1.  YANG Module for configuring UDP-Notif . . . . . . . . . .  17
      7.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  19
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  23
@@ -686,28 +686,24 @@ Internet-Draft                  UDP-Notif                      July 2026
    burst mitigation should require the users to explicitly configure
    such a mode of operation.
 
-   Applications SHOULD monitor packet loss and provide means for the
-   user to retrieve information about such losses.  As described in
-   Section 2.8 of [RFC8639], the publisher provides the "sent-event-
-   records" counter, which indicates the total number of notification
-   records sent to the receiver.
+   The receiver SHOULD monitor notification and segmentation loss and
+   make these metrics available to the application which is maintaining
+   the YANG-Push subscription at the publisher to maintain publisher
+   subscription scope and streaming rate.
 
    A receiver can compare the value of the "sent-event-records" counter
-   with its own count of successfully received notification records.  If
-   the publisher counter exceeds the receiver count, the receiver can
-   infer that one or more notification records have been lost, which may
-   indicate network congestion.  The UDP-Notif Message ID can be used to
-   identify missing UDP-Notif Messages, while, for segmented messages,
-   the Segment Number can additionally be used to determine the number
-   of lost segments within a given UDP-Notif Message.  For segmented
-   UDP-Notif Messages, any notification message discarded in accordance
-   with the message size considerations described in Section 5.2 MUST be
-   considered a lost notification message for the purpose of packet loss
-   detection and congestion inference.  Based on this information, the
-   receiver can detect packet loss, infer network congestion, and notify
-   the publisher to reduce the streaming rate.  The mechanism used to
-   control the publisher streaming rate is outside the scope of this
-   document.
+   as described in Section 2.8 of [RFC8639] with its own count of
+   successfully received notification records.  If the publisher counter
+   exceeds the receiver count, the receiver can infer that one or more
+   notification records have been lost, which may indicate network
+   congestion.  The UDP-Notif Message ID can be used to identify missing
+   UDP-Notif Messages, while, for segmented messages, the Segment Number
+   can additionally be used to determine the number of lost segments
+   within a given UDP-Notif Message.  For segmented UDP-Notif Messages,
+   any notification message discarded in accordance with the message
+   size considerations described in Section 5.2 MUST be considered a
+   lost notification message for the purpose of packet loss detection
+   and congestion inference.
 
 5.2.  Message Size
 
@@ -717,8 +713,12 @@ Internet-Draft                  UDP-Notif                      July 2026
    permits segmentation of the UDP-Notif message content without relying
    on IP fragmentation.
 
-
-
+   The publisher and receiver MUST support Notification Messages of at
+   least 96 kilobytes (KB), including any required segmentation and
+   reassembly.  Notification Messages larger than 96 KB SHOULD be
+   avoided, as they require additional segmentation.  Excessive
+   segmentation increases the likelihood that the loss of a single
+   segment will prevent successful reassembly of the entire message.
 
 
 
@@ -729,13 +729,6 @@ Huang-Feng, et al.       Expires 30 January 2027               [Page 13]
 
 Internet-Draft                  UDP-Notif                      July 2026
 
-
-   The publisher and receiver MUST support Notification Messages of at
-   least 96 kilobytes (KB), including any required segmentation and
-   reassembly.  Notification Messages larger than 96 KB SHOULD be
-   avoided, as they require additional segmentation.  Excessive
-   segmentation increases the likelihood that the loss of a single
-   segment will prevent successful reassembly of the entire message.
 
    A receiver collecting segmented UDP-Notif Messages MUST support the
    reassembly of messages containing at least 64 segments.  A receiver
@@ -779,19 +772,19 @@ Internet-Draft                  UDP-Notif                      July 2026
    DTLS 1.2 [RFC6347] or later, and SHOULD support DTLS 1.3 [RFC9147].
    No DTLS extensions are defined in this document.
 
-
-
-Huang-Feng, et al.       Expires 30 January 2027               [Page 14]
-
-Internet-Draft                  UDP-Notif                      July 2026
-
-
    When this security layer is used, the publisher MUST always be a DTLS
    client, and the receiver MUST always be a DTLS server.  The receivers
    MUST support accepting UDP-Notif Messages on the configured UDP port,
    but MAY be configurable to listen on a different port.  The
    recommendations for UDP source port selection specified in
    Section 3.1 also apply when DTLS is used.
+
+
+
+Huang-Feng, et al.       Expires 30 January 2027               [Page 14]
+
+Internet-Draft                  UDP-Notif                      July 2026
+
 
 6.1.  Session Lifecycle
 
@@ -835,17 +828,19 @@ Internet-Draft                  UDP-Notif                      July 2026
    segmented using the Segmentation Option defined in Section 4.1 before
    being carried over DTLS.
 
+   The application data is defined by the following ABNF [RFC5234]
+   expression:
+
+   APPLICATION-DATA = UDP-NOTIF-MSG
+
+
+
 
 
 Huang-Feng, et al.       Expires 30 January 2027               [Page 15]
 
 Internet-Draft                  UDP-Notif                      July 2026
 
-
-   The application data is defined by the following ABNF [RFC5234]
-   expression:
-
-   APPLICATION-DATA = UDP-NOTIF-MSG
 
    UDP-NOTIF-MSG is defined in Section 3.  When the Segmentation Option
    defined in Section 4.1 is present, the UDP-NOTIF-MSG carries a single
@@ -889,6 +884,11 @@ Internet-Draft                  UDP-Notif                      July 2026
    overhead when determining the maximum UDP-Notif notification message
    size.
 
+7.  A YANG Data Model for Management of UDP-Notif
+
+
+
+
 
 
 
@@ -897,8 +897,6 @@ Huang-Feng, et al.       Expires 30 January 2027               [Page 16]
 
 Internet-Draft                  UDP-Notif                      July 2026
 
-
-7.  A YANG Data Model for Management of UDP-Notif
 
 7.1.  YANG Module for configuring UDP-Notif
 
@@ -916,6 +914,8 @@ Internet-Draft                  UDP-Notif                      July 2026
    YANG module.
 
    The model defines the following YANG tree [RFC8340]:
+
+
 
 
 
@@ -1433,9 +1433,9 @@ Internet-Draft                  UDP-Notif                      July 2026
    between the publisher and receiver.
 
    The Quality of Service (QoS) queues for CS2 (Class Selector 2) marked
-   notifications on the network interfaces between the publisher and
-   receiver SHOULD be monitored to ensure that the configured traffic
-   volume limits are not exceeded.
+   packets on the network interfaces between the publisher and receiver
+   SHOULD be monitored to ensure that the configured traffic volume
+   limits are not exceeded.
 
 10.1.  ICMP Error Handling Considerations
 
