@@ -888,7 +888,7 @@ module: ietf-udp-notif-transport
         document using the generic "udp-client" grouping from the 
         "ietf-udp-client" module <xref target="RFC9984"/>
         and the "tls-client-grouping" defined in the "ietf-tls-client" module
-        <xref target="RFC9645"/>. It uses data types defined in <xref target="RFC6991"/>.</t>
+        <xref target="RFC9645"/>. It uses data types defined in <xref target="RFC9911"/>.</t>
 
         <sourcecode name="ietf-udp-notif-transport@2026-11-01.yang" type="yang" markers="true"><![CDATA[
 module ietf-udp-notif-transport {
@@ -1035,7 +1035,7 @@ module ietf-udp-notif-transport {
       description
         "When disabled, the publisher will not segment UDP-Notif
          messages and restrict the size of individual messages to the
-				 IP-layer MTU. Messages larger then the MTU of the egress
+         IP-layer MTU. Messages larger than the MTU of the egress
          interface will be dropped. Disabling is therefore not
          recommended.";
     }
@@ -1055,8 +1055,8 @@ module ietf-udp-notif-transport {
          control the size of each segment (UDP-Notif header, with
          options, included). The operator is responsible for not setting
          max-segment-size larger than the path MTU to the receiver. A
-         default of 1232 is set based on RFC 8200 recommondations that
-         path MTU of 1280 octets or greater is garantueed in IPv6
+         default of 1232 is set based on RFC 8200 recommendations that
+         path MTU of 1280 octets or greater is guaranteed in IPv6
          networks.";
     }
   }
@@ -1426,7 +1426,6 @@ Email: guyunan@huawei.com
       <xi:include href='https://xml.resource.org/public/rfc/bibxml/reference.RFC.5234.xml'/>
       <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.6020.xml"/>
       <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.6347.xml"/>
-      <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.6991.xml"/>
       <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.7950.xml"/>
       <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8040.xml"/>
       <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8085.xml"/>
@@ -1440,6 +1439,7 @@ Email: guyunan@huawei.com
       <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.9254.xml"/>
       <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.9147.xml"/>
       <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.9645.xml"/>
+      <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.9911.xml"/>
       <xi:include href="https://xml.resource.org/public/rfc/bibxml/reference.RFC.9984.xml"/>
       <xi:include href='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-distributed-notif.xml"/>
