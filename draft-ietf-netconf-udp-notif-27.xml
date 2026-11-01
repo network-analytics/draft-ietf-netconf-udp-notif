@@ -1231,7 +1231,7 @@ module ietf-udp-notif-transport {
       <section anchor="OpenSourceReceiver"
                title="Open Source Receiver Library">
         <t>INSA Lyon implemented this document for a YANG Push receiver as a
-        library.</t>
+        library. Supporting segmentation option.</t>
 
         <t>The open source code can be obtained here: <xref
         target="INSA-Lyon-Receiver"/>.</t>
@@ -1245,17 +1245,17 @@ module ietf-udp-notif-transport {
 
       <section anchor="Huawei" title="Huawei VRP">
         <t>Huawei implemented this document for a YANG Push publisher in their
-        VRP platform.</t>
+        VRP platform. Supporting segmentation option.</t>
       </section>
     
       <section anchor="SIXWIND" title="6WIND VSR">
         <t>6WIND implemented this document for a YANG Push publisher in their
-        VSR platform.</t>
+        VSR platform. Supporting segmentation and DTLS options.</t>
       </section>
 
       <section anchor="Cisco" title="Cisco IOS XR">
         <t>Cisco implemented this document for a YANG Push publisher in their
-        IOS XR platform.</t>
+        IOS XR platform. Supporting segmentation and DTLS options.</t>
       </section>
     </section>
 

@@ -1442,7 +1442,7 @@ Internet-Draft                  UDP-Notif                  November 2026
 9.2.  Open Source Receiver Library
 
    INSA Lyon implemented this document for a YANG Push receiver as a
-   library.
+   library.  Supporting segmentation option.
 
    The open source code can be obtained here: [INSA-Lyon-Receiver].
 
@@ -1467,17 +1467,17 @@ Internet-Draft                  UDP-Notif                  November 2026
 9.4.  Huawei VRP
 
    Huawei implemented this document for a YANG Push publisher in their
-   VRP platform.
+   VRP platform.  Supporting segmentation option.
 
 9.5.  6WIND VSR
 
    6WIND implemented this document for a YANG Push publisher in their
-   VSR platform.
+   VSR platform.  Supporting segmentation and DTLS options.
 
 9.6.  Cisco IOS XR
 
    Cisco implemented this document for a YANG Push publisher in their
-   IOS XR platform.
+   IOS XR platform.  Supporting segmentation and DTLS options.
 
 10.  Operational Considerations
 
@@ -1659,9 +1659,9 @@ Internet-Draft                  UDP-Notif                  November 2026
               Zhou, T., Zheng, G., Voit, E., Graf, T., and P. Francois,
               "Subscription to Notifications in a Distributed
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-netconf-distributed-notif-23, 4 October 2026,
+              ietf-netconf-distributed-notif-24, 31 October 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
-              distributed-notif-23>.
+              distributed-notif-24>.
 
    [I-D.ietf-netconf-https-notif]
               Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
