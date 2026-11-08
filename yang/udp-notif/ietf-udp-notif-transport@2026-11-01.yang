@@ -149,23 +149,28 @@ module ietf-udp-notif-transport {
     }
     leaf max-segment-size {
       type uint16 {
-        range "576 .. max" {
+        range "16..max" {
           description
-            "The minimum safe lower bound is set to 576 octets to ensure
-             the segment fits within standard minimum internet MTU
-             boundaries without violating basic IPv4 transmission
-             guarantees defined in RFC 791.";
+            "The minimum value of 16 octets corresponds to an empty
+             UDP-Notif segment, consisting of the 12-octet fixed
+             header and the 4-octet segmentation option, without
+             any notification payload.";
         }
       }
-      default "1232";
       description
         "UDP-Notif provides a configurable max-segment-size to
          control the size of each segment (UDP-Notif header, with
-         options, included). The operator is responsible for not setting
-         max-segment-size larger than the path MTU to the receiver. A
-         default of 1232 is set based on RFC 8200 recommondations that
-         path MTU of 1280 octets or greater is garantueed in IPv6
-         networks.";
+         options, included).
+
+         No default value is defined because the maximum segment
+         size depends on the underlying IP version (IPv4 or IPv6),
+         the path MTU, and whether DTLS is enabled. When DTLS is
+         enabled, the overhead also depends on the DTLS version
+         and negotiated cryptographic parameters.
+
+         The operator is responsible for configuring a value
+         that ensures the resulting IP datagram does not exceed
+         the path MTU to the receiver.";
     }
   }
 
