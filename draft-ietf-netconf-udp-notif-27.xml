@@ -102,7 +102,7 @@
       </address>
     </author>
 
-    <date day="01" month="November" year="2026"/>
+    <date day="17" month="November" year="2026"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -371,18 +371,20 @@
 
             <t>The Message ID MUST start with a randomized number with
             the first message and increase monotonically by the
-            publisher of UDP-Notif messages. A publisher MUST use
-            different Message IDs for different messages generated with
-            the same Message Publisher ID. Note that the main purpose of
-            the Message ID is to reconstruct messages which are
-            segmented using the segmentation option described in <xref
+            publisher of UDP-Notif messages even if the publisher
+						process restarts. If monotonically increasing Message IDs
+						can't be preserved accross process restarts, a new Message
+						Publisher ID MUST be used. A publisher MUST use different
+						Message IDs for different messages generated with the same
+						Message Publisher ID. Note that the main purpose of the
+						Message ID is to reconstruct messages which are segmented
+						using the segmentation option described in <xref
             target="sec_fragmentation"/>. The Message ID values MUST
             be incremented by one for successive messages originated
             with the same Message Publisher ID, so that message loss can
             be detected at data collection. When the last value (2^32-1)
             of Message ID has been reached, the Message ID wraps around
-            and restarts at 0.
-            </t>
+            and restarts at 0.</t>
 
             <t>Options are a variable-length field in the TLV format. When the
             Header Length is larger than 12 octets, which is the length of the
@@ -778,11 +780,12 @@
           <t>When no data is received from a DTLS connection for an extended period 
           of time, the Receiver (DTLS server) MAY close the connection. 
           Implementations SHOULD use an inactivity timer with a default value of 10 
-          minutes, unless an application-specific profile specifies otherwise. The 
-          Receiver MUST attempt to initiate an exchange of close_notify alerts with 
-          the publisher before closing the connection. Receivers that are
-          unprepared to receive any more data MAY close the connection after
-          sending the close_notify alert.</t>
+          minutes, unless an application-specific profile specifies otherwise and
+					the Publisher SHOULD configure keepalives with a value lower than the
+					Receiver inacivity timer. The Receiver MUST attempt to initiate an exchange
+					of close_notify alerts with the publisher before closing the connection.
+					Receivers that are unprepared to receive any more data MAY close the
+					connection after sending the close_notify alert.</t>
 
           <t>Keeping a DTLS connection open after notifications are no longer 
           expected results in unnecessary retention of DTLS state and transport 
@@ -885,7 +888,7 @@ module: ietf-udp-notif-transport
         and the "tls-client-grouping" defined in the "ietf-tls-client" module
         <xref target="RFC9645"/>. It uses data types defined in <xref target="RFC9911"/>.</t>
 
-        <sourcecode name="ietf-udp-notif-transport@2026-11-01.yang" type="yang" markers="true"><![CDATA[
+        <sourcecode name="ietf-udp-notif-transport@2026-11-17.yang" type="yang" markers="true"><![CDATA[
 module ietf-udp-notif-transport {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport";
@@ -953,7 +956,7 @@ module ietf-udp-notif-transport {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-  revision 2026-11-01 {
+  revision 2026-11-17 {
     description
       "Initial revision";
     reference
@@ -1016,10 +1019,6 @@ module ietf-udp-notif-transport {
       if-feature "dtls";
       presence "dtls";
       uses tlsc:tls-client-grouping {
-        // Remove keep-alives for DTLS
-        refine "keepalives" {
-          if-feature "not tlsc:tls-client-keepalives";
-        }
       }
       description
         "Container for configuring DTLS parameters.";

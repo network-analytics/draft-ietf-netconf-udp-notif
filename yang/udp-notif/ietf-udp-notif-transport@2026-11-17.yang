@@ -66,7 +66,7 @@ module ietf-udp-notif-transport {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-  revision 2026-11-01 {
+  revision 2026-11-17 {
     description
       "Initial revision";
     reference
@@ -129,10 +129,6 @@ module ietf-udp-notif-transport {
       if-feature "dtls";
       presence "dtls";
       uses tlsc:tls-client-grouping {
-        // Remove keep-alives for DTLS
-        refine "keepalives" {
-          if-feature "not tlsc:tls-client-keepalives";
-        }
       }
       description
         "Container for configuring DTLS parameters.";
