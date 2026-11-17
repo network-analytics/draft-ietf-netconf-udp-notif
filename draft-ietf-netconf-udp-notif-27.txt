@@ -90,11 +90,11 @@ Table of Contents
        6.1.4.  DTLS Fragmentation  . . . . . . . . . . . . . . . . .  17
    7.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  17
      7.1.  YANG Module for configuring UDP-Notif . . . . . . . . . .  17
-     7.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  19
-   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  23
+     7.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  18
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  22
      8.1.  UDP-Notif Protocol Registry Group . . . . . . . . . . . .  23
        8.1.1.  UDP-Notif Media Types Registry  . . . . . . . . . . .  23
-       8.1.2.  UDP-Notif Option Types Registry . . . . . . . . . . .  24
+       8.1.2.  UDP-Notif Option Types Registry . . . . . . . . . . .  23
        8.1.3.  UDP-Notif Header Version Registry . . . . . . . . . .  24
      8.2.  URI . . . . . . . . . . . . . . . . . . . . . . . . . . .  25
      8.3.  YANG Module Name  . . . . . . . . . . . . . . . . . . . .  25
@@ -418,7 +418,7 @@ Internet-Draft                  UDP-Notif                  November 2026
    *  The Message ID MUST start with a randomized number with the first
       message and increase monotonically by the publisher of UDP-Notif
       messages even if the publisher process restarts.  If monotonically
-      increasing Message IDs can't be preserved accross process
+      increasing Message IDs can not be preserved across process
       restarts, a new Message Publisher ID MUST be used.  A publisher
       MUST use different Message IDs for different messages generated
       with the same Message Publisher ID.  Note that the main purpose of
@@ -926,34 +926,6 @@ Internet-Draft                  UDP-Notif                  November 2026
 
    The model defines the following YANG tree [RFC8340]:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Huang-Feng, et al.         Expires 21 May 2027                 [Page 17]
-
-Internet-Draft                  UDP-Notif                  November 2026
-
-
    module: ietf-udp-notif-transport
 
      augment /sn:subscriptions/snr:receiver-instances
@@ -974,6 +946,14 @@ Internet-Draft                  UDP-Notif                  November 2026
              |  |     +--:(raw-public-key)
              |  |     |        {client-ident-raw-public-key}?
              |  |     |     ...
+
+
+
+Huang-Feng, et al.         Expires 21 May 2027                 [Page 17]
+
+Internet-Draft                  UDP-Notif                  November 2026
+
+
              |  |     +--:(tls12-psk) {client-ident-tls12-psk}?
              |  |     |     ...
              |  |     +--:(tls13-epsk) {client-ident-tls13-epsk}?
@@ -993,22 +973,19 @@ Internet-Draft                  UDP-Notif                  November 2026
              |  |  +--rw tls13-epsks?       empty
              |  |          {server-auth-tls13-epsk}?
              |  +--rw hello-params {tlscmn:hello-params}?
-             |     +--rw tls-versions
-             |     |  +--rw min?   identityref
-             |     |  +--rw max?   identityref
-             |     +--rw cipher-suites
-             |        +--rw cipher-suite*
-             |                tlscsa:tls-cipher-suite-algorithm
+             |  |  +--rw tls-versions
+             |  |  |  +--rw min?   identityref
+             |  |  |  +--rw max?   identityref
+             |  |  +--rw cipher-suites
+             |  |     +--rw cipher-suite*
+             |  |             tlscsa:tls-cipher-suite-algorithm
+             |  +--rw keepalives {tls-client-keepalives}?
+             |     +--rw peer-allowed-to-send?   empty
+             |     +--rw test-peer-aliveness!
+             |        +--rw max-wait?       uint16
+             |        +--rw max-attempts?   uint8
              +--rw enable-segmentation?   boolean
              +--rw max-segment-size?      uint16
-
-
-
-
-Huang-Feng, et al.         Expires 21 May 2027                 [Page 18]
-
-Internet-Draft                  UDP-Notif                  November 2026
-
 
 7.2.  YANG Module
 
@@ -1021,6 +998,17 @@ Internet-Draft                  UDP-Notif                  November 2026
    client" module [RFC9984] and the "tls-client-grouping" defined in the
    "ietf-tls-client" module [RFC9645].  It uses data types defined in
    [RFC9911].
+
+
+
+
+
+
+
+Huang-Feng, et al.         Expires 21 May 2027                 [Page 18]
+
+Internet-Draft                  UDP-Notif                  November 2026
+
 
    <CODE BEGINS> file "ietf-udp-notif-transport@2026-11-17.yang"
    module ietf-udp-notif-transport {
@@ -1058,14 +1046,6 @@ Internet-Draft                  UDP-Notif                  November 2026
 
         Authors:  Tianran Zhou
                   <mailto:zhoutianran@huawei.com>
-
-
-
-Huang-Feng, et al.         Expires 21 May 2027                 [Page 19]
-
-Internet-Draft                  UDP-Notif                  November 2026
-
-
                   Thomas Graf
                   <mailto:thomas.graf@swisscom.com>
                   Pierre Francois
@@ -1074,9 +1054,17 @@ Internet-Draft                  UDP-Notif                  November 2026
                   <mailto:alex.huang-feng@t-systems.com>
                   Paolo Lucente
                   <mailto:paolo@ntt.net>";
+
      description
        "Defines a model for configuring UDP-Notif as a transport
         for configured subscriptions [RFC8639].
+
+
+
+Huang-Feng, et al.         Expires 21 May 2027                 [Page 19]
+
+Internet-Draft                  UDP-Notif                  November 2026
+
 
         Copyright (c) 2026 IETF Trust and the persons identified as
         authors of the code.  All rights reserved.
@@ -1114,14 +1102,6 @@ Internet-Draft                  UDP-Notif                  November 2026
          "Indicates that CBOR encoding of notification
           messages is supported.";
        reference
-
-
-
-Huang-Feng, et al.         Expires 21 May 2027                 [Page 20]
-
-Internet-Draft                  UDP-Notif                  November 2026
-
-
          "RFC 9254: CBOR Encoding of Data Modeled with YANG";
      }
 
@@ -1134,6 +1114,13 @@ Internet-Draft                  UDP-Notif                  November 2026
           RFC 9147: The Datagram Transport Layer Security (DTLS)
           Protocol Version 1.3";
      }
+
+
+
+Huang-Feng, et al.         Expires 21 May 2027                 [Page 20]
+
+Internet-Draft                  UDP-Notif                  November 2026
+
 
      /*
       * IDENTITIES
@@ -1168,16 +1155,7 @@ Internet-Draft                  UDP-Notif                  November 2026
        container dtls {
          if-feature "dtls";
          presence "dtls";
-         uses tlsc:tls-client-grouping {
-         }
-
-
-
-Huang-Feng, et al.         Expires 21 May 2027                 [Page 21]
-
-Internet-Draft                  UDP-Notif                  November 2026
-
-
+         uses tlsc:tls-client-grouping;
          description
            "Container for configuring DTLS parameters.";
        }
@@ -1192,6 +1170,14 @@ Internet-Draft                  UDP-Notif                  November 2026
             recommended.";
        }
        leaf max-segment-size {
+
+
+
+Huang-Feng, et al.         Expires 21 May 2027                 [Page 21]
+
+Internet-Draft                  UDP-Notif                  November 2026
+
+
          type uint16 {
            range "16..max" {
              description
@@ -1226,14 +1212,6 @@ Internet-Draft                  UDP-Notif                  November 2026
              "The UDP-Notif receiver to send notifications to.";
            uses udp-notif-receiver;
          }
-
-
-
-Huang-Feng, et al.         Expires 21 May 2027                 [Page 22]
-
-Internet-Draft                  UDP-Notif                  November 2026
-
-
        }
        description
          "Augments the transport-type choice to include the 'udp-notif'
@@ -1247,6 +1225,14 @@ Internet-Draft                  UDP-Notif                  November 2026
    This document defines new registries under a new registry group
    entitled "UDP-Notif Protocol", and updates the IETF XML and YANG
    module registries.
+
+
+
+
+Huang-Feng, et al.         Expires 21 May 2027                 [Page 22]
+
+Internet-Draft                  UDP-Notif                  November 2026
+
 
 8.1.  UDP-Notif Protocol Registry Group
 
@@ -1282,6 +1268,20 @@ Internet-Draft                  UDP-Notif                  November 2026
    value, a short description of the media type and the document
    reference (e.g., RFC number).
 
+8.1.2.  UDP-Notif Option Types Registry
+
+   UDP-Notif uses an 8-bit option type (see Section 4), for which IANA
+   is to create and maintain a new registry entitled "UDP-Notif Option
+   Types" under the registry group "UDP-Notif Protocol".  This document
+   defines the following option type values:
+
+
+
+
+
+
+
+
 
 
 
@@ -1289,13 +1289,6 @@ Huang-Feng, et al.         Expires 21 May 2027                 [Page 23]
 
 Internet-Draft                  UDP-Notif                  November 2026
 
-
-8.1.2.  UDP-Notif Option Types Registry
-
-   UDP-Notif uses an 8-bit option type (see Section 4), for which IANA
-   is to create and maintain a new registry entitled "UDP-Notif Option
-   Types" under the registry group "UDP-Notif Protocol".  This document
-   defines the following option type values:
 
                 +=======+=====================+===========+
                 | Value | Description         | Reference |
@@ -1327,6 +1320,13 @@ Internet-Draft                  UDP-Notif                  November 2026
    create and maintain a new registry entitled "UDP-Notif Header
    Version" under the registry group "UDP-Notif Protocol".  This
    document defines the following header version values:
+
+
+
+
+
+
+
 
 
 

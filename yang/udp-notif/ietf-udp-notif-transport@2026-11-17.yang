@@ -128,8 +128,7 @@ module ietf-udp-notif-transport {
     container dtls {
       if-feature "dtls";
       presence "dtls";
-      uses tlsc:tls-client-grouping {
-      }
+      uses tlsc:tls-client-grouping;
       description
         "Container for configuring DTLS parameters.";
     }
@@ -139,7 +138,7 @@ module ietf-udp-notif-transport {
       description
         "When disabled, the publisher will not segment UDP-Notif
          messages and restrict the size of individual messages to the
-         IP-layer MTU. Messages larger then the MTU of the egress
+         IP-layer MTU. Messages larger than the MTU of the egress
          interface will be dropped. Disabling is therefore not
          recommended.";
     }
